@@ -183,13 +183,13 @@ public class DemoController {
 
 行数据类型与转换格式对照表
 
-| message       | 钉钉         | 微信           | 飞书   | 邮件           |
-|---------------|------------|--------------|------|--------------|
-| SubLine.text  | Markdown文字 | Markdown文字   | text | <p>          |
-| SubLine.title | Markdown标题 | Markdown标题   | text | <h1>~<h6>    |
-| SubLine.link  | Markdown链接 | Markdown链接   | a    | <a>          |
-| SubLine.quote | Markdown引用 | Markdown引用文字 | text | <blockquote> |
-| SubLine.bold  | Markdown加粗 | Markdown加粗   | text | <strong>     |
+| message       | 钉钉         | 微信           | 飞书   | 邮件            |
+|---------------|------------|--------------|------|---------------|
+| SubLine.text  | Markdown文字 | Markdown文字   | text | \<p>          |
+| SubLine.title | Markdown标题 | Markdown标题   | text | \<h1>~\<h6>   |
+| SubLine.link  | Markdown链接 | Markdown链接   | a    | \<a>          |
+| SubLine.quote | Markdown引用 | Markdown引用文字 | text | \<blockquote> |
+| SubLine.bold  | Markdown加粗 | Markdown加粗   | text | \<strong>     |
 
 #### 2.根据别名、消息通道类型配置额外参数
 
@@ -212,6 +212,40 @@ public class DemoController {
 | atMobiles | List<String> | 被@人的手机号      |
 | atUserIds | List<String> | 被@人的用户userid |
 | isAtAll   | Boolean      | 是否@所有人       |
+
+###### 2. 钉钉消息支持参数
+| 参数           | 参数类型    | 说明                                                          |
+|--------------|---------|-------------------------------------------------------------|
+| userid_list  | String  | user123,user456 接收者的userid列表，最大用户列表长度100                    |
+| dept_id_list | String  | 123,345 接收者的部门id列表，最大列表长度20。接收者是部门ID时，包括子部门下的所有用户。          |
+| to_all_user  | Boolean | 是否发送给企业全部用户(当设置为false时必须指定userid_list或dept_id_list其中一个参数的值) |
+
+###### 3. 飞书机器人支持参数
+@所有人
+.addFeishuCustomRobot("all","所有人")
+@单个用户（填入用户的 Open ID，且必须是有效值，否则取名字展示，并不产生实际的 @ 效果）
+.addFeishuCustomRobot("ou_xxx","名字")
+
+###### 4. 飞书消息
+| 参数              | 参数类型   | 说明                                               |
+|-----------------|--------|--------------------------------------------------|
+| receive_id_type | String | 消息接收者id类型 open_id/user_id/union_id/email/chat_id |
+| receive_id      | String | 消息接收者的ID，ID类型应与查询参数receive_id_type 对应            |
+
+###### 5. 企业微信自定义机器人
+暂无参数
+
+###### 6. 企业微信消息
+| 参数      | 参数类型   | 说明                                                                     |
+|---------|--------|------------------------------------------------------------------------|
+| touser  | String | 指定接收消息的成员，成员ID列表（多个接收者用‘\|’分隔，最多支持1000个）。特殊情况：指定为"@all"，则向该企业应用的全部成员发送 |
+| toparty | String | 指定接收消息的部门，部门ID列表，多个接收者用‘\|’分隔，最多支持100个。当touser为"@all"时忽略本参数            |
+| totag   | String | 指定接收消息的标签，标签ID列表，多个接收者用‘\|’分隔，最多支持100个。当touser为"@all"时忽略本参数            |
+
+###### 7. 邮箱
+| 参数 | 参数类型   | 说明          |
+|----|--------|-------------|
+| to | String | 收件邮箱1,收件邮箱2 |
 
 ## 其他1：内置界面
 

@@ -1,7 +1,6 @@
 package cn.wubo.message.platform.dingtalk;
 
 import cn.wubo.message.core.DingtalkProperties;
-import cn.wubo.message.core.MessageType;
 import cn.wubo.message.message.MarkdownContent;
 import cn.wubo.message.message.TextContent;
 import cn.wubo.message.platform.AbstractSendService;
@@ -52,9 +51,9 @@ public class DingtalkMessageServiceImpl extends AbstractSendService<DingtalkProp
     private OapiMessageCorpconversationAsyncsendV2Request request(DingtalkProperties.Message aliasProperties, Map<String, Object> params) {
         OapiMessageCorpconversationAsyncsendV2Request request = new OapiMessageCorpconversationAsyncsendV2Request();
         request.setAgentId(aliasProperties.getAgentId());
-        request.setToAllUser(params.containsKey("toAllUser") ? (Boolean) params.get("toAllUser") : Boolean.FALSE);
-        request.setUseridList(params.containsKey("useridList") ? (String) params.get("useridList") : null);
-        request.setDeptIdList(params.containsKey("deptIdList") ? (String) params.get("deptIdList") : null);
+        request.setToAllUser(params.containsKey("to_all_user") ? (Boolean) params.get("to_all_user") : null);
+        request.setUseridList(params.containsKey("userid_list") ? (String) params.get("userid_list") : null);
+        request.setDeptIdList(params.containsKey("dept_id_list") ? (String) params.get("dept_id_list") : null);
         return request;
     }
 

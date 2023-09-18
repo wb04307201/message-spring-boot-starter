@@ -52,7 +52,7 @@ public class DingtalkCustomRobotServiceImpl extends AbstractSendService<Dingtalk
     private OapiRobotSendRequest request(Map<String, Object> params) {
         OapiRobotSendRequest request = new OapiRobotSendRequest();
         OapiRobotSendRequest.At at = new OapiRobotSendRequest.At();
-        at.setIsAtAll(params.containsKey("isAll") ? (Boolean) params.get("isAll") : Boolean.TRUE);
+        at.setIsAtAll(params.containsKey("isAll") ? (Boolean) params.get("isAll") : null);
         at.setAtMobiles(params.containsKey("atMobiles") ? (List<String>) params.get("atMobiles") : null);
         at.setAtUserIds(params.containsKey("atUserIds") ? (List<String>) params.get("atUserIds") : null);
         request.setAt(at);
