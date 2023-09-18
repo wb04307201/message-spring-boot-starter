@@ -30,7 +30,7 @@ public class FeishuCustomRobotServiceImpl extends AbstractSendService<FeishuProp
         JSONObject jo = new JSONObject();
         jo.put("msgtype", "post");
         JSONArray ja = ContentUtils.toPost(content);
-        content.getContentParams(aliasProperties.getAlias(), MessageType.getMessageType(aliasProperties)).getFeishuCustomRobot().entrySet().stream().forEach(entry -> {
+        content.getContentParams(aliasProperties.getAlias()).getFeishuCustomRobot().entrySet().stream().forEach(entry -> {
             JSONObject temp = new JSONObject();
             temp.put("tag", "at");
             temp.put("user_id", entry.getKey());
@@ -53,7 +53,7 @@ public class FeishuCustomRobotServiceImpl extends AbstractSendService<FeishuProp
     public String sendText(FeishuProperties.CustomRobot aliasProperties, TextContent content) {
         JSONObject jo = new JSONObject();
         jo.put("msgtype", "text");
-        jo.put("content", content.getContentParams(aliasProperties.getAlias(), MessageType.getMessageType(aliasProperties)).getFeishuCustomRobot().entrySet().stream().map(entry -> "<at user_id = \"" + entry.getKey() + "\">" + entry.getValue() + "</at>").collect(Collectors.joining(" ")) + " " + content.getText());
+        jo.put("content", content.getContentParams(aliasProperties.getAlias()).getFeishuCustomRobot().entrySet().stream().map(entry -> "<at user_id = \"" + entry.getKey() + "\">" + entry.getValue() + "</at>").collect(Collectors.joining(" ")) + " " + content.getText());
         try {
             return request(aliasProperties, jo);
         } catch (NoSuchAlgorithmException | InvalidKeyException e) {

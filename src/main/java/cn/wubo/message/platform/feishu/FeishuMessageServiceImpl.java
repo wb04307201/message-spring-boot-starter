@@ -55,7 +55,7 @@ public class FeishuMessageServiceImpl extends AbstractSendService<FeishuProperti
         jo.put("text", content.getText());
         Client client = Client.newBuilder("appId", "appSecret").build();
         Map<String, List<String>> headers = new HashMap<>();
-        headers.put("receive_id_type", Lists.newArrayList((String) content.getContentParams(aliasProperties.getAlias(), MessageType.getMessageType(aliasProperties)).getFeishuMessage().get("receive_id_type")));
+        headers.put("receive_id_type", Lists.newArrayList((String) content.getContentParams(aliasProperties.getAlias()).getFeishuMessage().get("receive_id_type")));
         try {
             CreateMessageResp resp = client.im().message().create(CreateMessageReq.newBuilder().createMessageReqBody(CreateMessageReqBody.newBuilder().receiveId((String) content.getParams().getFeishuMessage().get("receive_id")).msgType("text").content(jo.toJSONString()).build()).build(), RequestOptions.newBuilder().headers(headers).build());
             return JSON.toJSONString(resp);

@@ -30,7 +30,7 @@ public class DingtalkCustomRobotServiceImpl extends AbstractSendService<Dingtalk
 
     @Override
     public String sendMarkdown(DingtalkProperties.CustomRobot aliasProperties, MarkdownContent content) {
-        OapiRobotSendRequest request = request(content.getContentParams(aliasProperties.getAlias(), MessageType.getMessageType(aliasProperties)).getDingtalkCustomRobot());
+        OapiRobotSendRequest request = request(content.getContentParams(aliasProperties.getAlias()).getDingtalkCustomRobot());
         request.setMsgtype("markdown");
         OapiRobotSendRequest.Markdown markdown = new OapiRobotSendRequest.Markdown();
         markdown.setTitle(content.getTitle());
@@ -41,7 +41,7 @@ public class DingtalkCustomRobotServiceImpl extends AbstractSendService<Dingtalk
 
     @Override
     public String sendText(DingtalkProperties.CustomRobot aliasProperties, TextContent content) {
-        OapiRobotSendRequest request = request(content.getContentParams(aliasProperties.getAlias(), MessageType.getMessageType(aliasProperties)).getDingtalkCustomRobot());
+        OapiRobotSendRequest request = request(content.getContentParams(aliasProperties.getAlias()).getDingtalkCustomRobot());
         request.setMsgtype("text");
         OapiRobotSendRequest.Text text = new OapiRobotSendRequest.Text();
         text.setContent(content.getText());

@@ -26,7 +26,7 @@ public class DingtalkMessageServiceImpl extends AbstractSendService<DingtalkProp
 
     @Override
     public String sendMarkdown(DingtalkProperties.Message aliasProperties, MarkdownContent content) {
-        OapiMessageCorpconversationAsyncsendV2Request request = request(aliasProperties, content.getContentParams(aliasProperties.getAlias(), MessageType.getMessageType(aliasProperties)).getDingtalkMessage());
+        OapiMessageCorpconversationAsyncsendV2Request request = request(aliasProperties, content.getContentParams(aliasProperties.getAlias()).getDingtalkMessage());
         OapiMessageCorpconversationAsyncsendV2Request.Msg msg = new OapiMessageCorpconversationAsyncsendV2Request.Msg();
         msg.setMsgtype("markdown");
         OapiMessageCorpconversationAsyncsendV2Request.Markdown markdown = new OapiMessageCorpconversationAsyncsendV2Request.Markdown();
@@ -39,7 +39,7 @@ public class DingtalkMessageServiceImpl extends AbstractSendService<DingtalkProp
 
     @Override
     public String sendText(DingtalkProperties.Message aliasProperties, TextContent content) {
-        OapiMessageCorpconversationAsyncsendV2Request request = request(aliasProperties, content.getContentParams(aliasProperties.getAlias(), MessageType.getMessageType(aliasProperties)).getDingtalkMessage());
+        OapiMessageCorpconversationAsyncsendV2Request request = request(aliasProperties, content.getContentParams(aliasProperties.getAlias()).getDingtalkMessage());
         OapiMessageCorpconversationAsyncsendV2Request.Msg msg = new OapiMessageCorpconversationAsyncsendV2Request.Msg();
         msg.setMsgtype("text");
         OapiMessageCorpconversationAsyncsendV2Request.Text text = new OapiMessageCorpconversationAsyncsendV2Request.Text();

@@ -11,7 +11,6 @@ public abstract class RequestContent<T> {
     protected List<MessageType> messageType = new ArrayList<>();
     protected ContentParams params = new ContentParams();
     protected Map<String, ContentParams> aliasParams = new HashMap<>();
-    protected Map<MessageType, ContentParams> messageTypeParams = new HashMap<>();
 
     public static TextContent buildText() {
         return new TextContent();
@@ -91,39 +90,8 @@ public abstract class RequestContent<T> {
         return (T) this;
     }
 
-    public T addDingtalkCustomRobot(MessageType messageType, String key, Object value) {
-        messageTypeParams.computeIfAbsent(messageType, s -> new ContentParams()).getDingtalkCustomRobot().put(key, value);
-        return (T) this;
-    }
-
-    public T addDingtalkMessage(MessageType messageType, String key, Object value) {
-        messageTypeParams.computeIfAbsent(messageType, s -> new ContentParams()).getDingtalkMessage().put(key, value);
-        return (T) this;
-    }
-
-    public T addFeishuCustomRobot(MessageType messageType, String key, Object value) {
-        messageTypeParams.computeIfAbsent(messageType, s -> new ContentParams()).getFeishuCustomRobot().put(key, value);
-        return (T) this;
-    }
-
-    public T addFeishuMessage(MessageType messageType, String key, Object value) {
-        messageTypeParams.computeIfAbsent(messageType, s -> new ContentParams()).getFeishuMessage().put(key, value);
-        return (T) this;
-    }
-
-    public T addWeixinMessage(MessageType messageType, String key, Object value) {
-        messageTypeParams.computeIfAbsent(messageType, s -> new ContentParams()).getWeixinMessage().put(key, value);
-        return (T) this;
-    }
-
-    public T addMailSmtp(MessageType messageType, String key, Object value) {
-        messageTypeParams.computeIfAbsent(messageType, s -> new ContentParams()).getMailSmtp().put(key, value);
-        return (T) this;
-    }
-
-    public ContentParams getContentParams(String alias, MessageType messageType) {
+    public ContentParams getContentParams(String alias) {
         if (aliasParams.containsKey(alias)) return aliasParams.get(alias);
-        if (messageTypeParams.containsKey(messageType)) return messageTypeParams.get(messageType);
         return params;
     }
 }
