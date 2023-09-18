@@ -1,5 +1,6 @@
 package cn.wubo.message.platform.wx;
 
+import cn.wubo.message.core.MessageType;
 import cn.wubo.message.core.WeixinPrpperties;
 import cn.wubo.message.message.MarkdownContent;
 import cn.wubo.message.message.TextContent;
@@ -23,7 +24,7 @@ public class WeixinMessageServiceImpl extends AbstractSendService<WeixinPrpperti
     @Override
     public String sendMarkdown(WeixinPrpperties.Message aliasProperties, MarkdownContent content) {
         JSONObject result = WeixinUtils.getToken(Objects.requireNonNull(aliasProperties.getCorpid()), Objects.requireNonNull(aliasProperties.getCorpsecret()));
-        JSONObject jo = request(aliasProperties, content.getContentParams(aliasProperties.getAlias()).getWeixinMessage());
+        JSONObject jo = request(aliasProperties, content.getContentParams(aliasProperties.getAlias(), MessageType.getMessageType(aliasProperties)).getWeixinMessage());
         jo.put("msgtype", "markdown");
         jo.put("markdown", new JSONObject().put("content", ContentUtils.toMarkdown(content, "\n")));
         return WeixinUtils.message(result.getString("access_token"), jo.toJSONString());
@@ -32,7 +33,7 @@ public class WeixinMessageServiceImpl extends AbstractSendService<WeixinPrpperti
     @Override
     public String sendText(WeixinPrpperties.Message aliasProperties, TextContent content) {
         JSONObject result = WeixinUtils.getToken(Objects.requireNonNull(aliasProperties.getCorpid()), Objects.requireNonNull(aliasProperties.getCorpsecret()));
-        JSONObject jo = request(aliasProperties, content.getContentParams(aliasProperties.getAlias()).getWeixinMessage());
+        JSONObject jo = request(aliasProperties, content.getContentParams(aliasProperties.getAlias(), MessageType.getMessageType(aliasProperties)).getWeixinMessage());
         jo.put("msgtype", "text");
         jo.put("text", new JSONObject().put("content", content.getText()));
         return WeixinUtils.message(result.getString("access_token"), jo.toJSONString());

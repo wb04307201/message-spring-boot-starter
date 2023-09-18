@@ -1,5 +1,6 @@
 package cn.wubo.message.core;
 
+import cn.wubo.message.exception.MessageRuntimeException;
 import cn.wubo.message.platform.ISendService;
 import cn.wubo.message.platform.dingtalk.DingtalkCustomRobotServiceImpl;
 import cn.wubo.message.platform.dingtalk.DingtalkMessageServiceImpl;
@@ -10,6 +11,7 @@ import cn.wubo.message.platform.wx.WeixinCustomRobotServiceImpl;
 import cn.wubo.message.platform.wx.WeixinMessageServiceImpl;
 import lombok.Getter;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,7 +28,7 @@ public enum MessageType {
     }
 
     public static MessageType getMessageType(MessageBase messageBase) {
-        return MessageType.valueOf(messageBase.getClass().getName());
+        return Arrays.stream(MessageType.values()).filter(messageType -> messageBase.getClass().getName().equals(messageType.getClassName())).findAny().orElseThrow(() -> new MessageRuntimeException("未知的消息配置！"));
     }
 
     private static final Map<MessageType, Class<? extends ISendService>> MESSAGE_TYPE_MAPPER = new HashMap<>();

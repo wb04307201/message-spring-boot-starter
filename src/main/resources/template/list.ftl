@@ -18,13 +18,22 @@
     <form class="row g-3 mb-3 mt-3" method="POST">
         <div class="col-6">
             <label class="form-check-label" for="type">平台</label>
-            <select class="form-select" id="type" name="type" aria-label="选择平台">
+            <select class="form-select" id="type" name="type" aria-label="选择消息通道类型">
                 <option value="" <#if ((query.type)!'') == ''>selected</#if>>All</option>
-                <option value="DINGTALK" <#if ((query.type)!'') == 'DINGTALK'>selected</#if>>钉钉
+                <option value="DingtalkCustomRobot" <#if ((query.type)!'') == 'DingtalkCustomRobot'>selected</#if>>钉钉自定义机器人
                 </option>
-                <option value="WEIXIN" <#if ((query.type)!'') == 'WEIXIN'>selected</#if>>企业微信
+                <option value="DingtalkMessage" <#if ((query.type)!'') == 'DingtalkMessage'>selected</#if>>钉钉消息
                 </option>
-                <option value="FEISHU" <#if ((query.type)!'') == 'FEISHU'>selected</#if>>飞书</option>
+                <option value="FeishuCustomRobot" <#if ((query.type)!'') == 'FeishuCustomRobot'>selected</#if>>飞书自定义机器人
+                </option>
+                <option value="FeishuMessage" <#if ((query.type)!'') == 'FeishuMessage'>selected</#if>>飞书消息
+                </option>
+                <option value="WeixinCustomRobot" <#if ((query.type)!'') == 'WeixinCustomRobot'>selected</#if>>微信自定义机器人
+                </option>
+                <option value="WeixiMessage" <#if ((query.type)!'') == 'WeixiMessage'>selected</#if>>微信消息
+                </option>
+                <option value="MailSmtp" <#if ((query.type)!'') == 'MailSmtp'>selected</#if>>邮箱
+                </option>
             </select>
         </div>
         <div class="col-6">

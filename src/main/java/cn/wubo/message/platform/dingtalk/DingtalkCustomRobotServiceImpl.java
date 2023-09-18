@@ -1,6 +1,7 @@
 package cn.wubo.message.platform.dingtalk;
 
 import cn.wubo.message.core.DingtalkProperties;
+import cn.wubo.message.core.MessageType;
 import cn.wubo.message.message.MarkdownContent;
 import cn.wubo.message.message.TextContent;
 import cn.wubo.message.platform.AbstractSendService;
@@ -29,7 +30,7 @@ public class DingtalkCustomRobotServiceImpl extends AbstractSendService<Dingtalk
 
     @Override
     public String sendMarkdown(DingtalkProperties.CustomRobot aliasProperties, MarkdownContent content) {
-        OapiRobotSendRequest request = request(content.getContentParams(aliasProperties.getAlias()).getDingtalkCustomRobot());
+        OapiRobotSendRequest request = request(content.getContentParams(aliasProperties.getAlias(), MessageType.getMessageType(aliasProperties)).getDingtalkCustomRobot());
         request.setMsgtype("markdown");
         OapiRobotSendRequest.Markdown markdown = new OapiRobotSendRequest.Markdown();
         markdown.setTitle(content.getTitle());
@@ -40,7 +41,7 @@ public class DingtalkCustomRobotServiceImpl extends AbstractSendService<Dingtalk
 
     @Override
     public String sendText(DingtalkProperties.CustomRobot aliasProperties, TextContent content) {
-        OapiRobotSendRequest request = request(content.getContentParams(aliasProperties.getAlias()).getDingtalkCustomRobot());
+        OapiRobotSendRequest request = request(content.getContentParams(aliasProperties.getAlias(), MessageType.getMessageType(aliasProperties)).getDingtalkCustomRobot());
         request.setMsgtype("text");
         OapiRobotSendRequest.Text text = new OapiRobotSendRequest.Text();
         text.setContent(content.getText());

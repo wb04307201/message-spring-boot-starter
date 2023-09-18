@@ -10,6 +10,7 @@ public abstract class RequestContent<T> {
     protected List<String> alias = new ArrayList<>();
     protected List<MessageType> messageType = new ArrayList<>();
     protected ContentParams params = new ContentParams();
+    protected Map<MessageType, ContentParams> messageTypeParams = new HashMap<>();
     protected Map<String, ContentParams> aliasParams = new HashMap<>();
 
     public static TextContent buildText() {
@@ -60,38 +61,69 @@ public abstract class RequestContent<T> {
         return (T) this;
     }
 
-    public ContentParams getContentParams(String alias) {
-        if (aliasParams.containsKey(alias)) return aliasParams.get("alias");
-        return params;
-    }
-
     public T addDingtalkCustomRobot(String alias, String key, Object value) {
-        aliasParams.get(alias).getDingtalkCustomRobot().put(key, value);
+        aliasParams.computeIfAbsent(alias, s -> new ContentParams()).getDingtalkCustomRobot().put(key, value);
         return (T) this;
     }
 
     public T addDingtalkMessage(String alias, String key, Object value) {
-        aliasParams.get(alias).getDingtalkMessage().put(key, value);
+        aliasParams.computeIfAbsent(alias, s -> new ContentParams()).getDingtalkMessage().put(key, value);
         return (T) this;
     }
 
     public T addFeishuCustomRobot(String alias, String key, Object value) {
-        aliasParams.get(alias).getFeishuCustomRobot().put(key, value);
+        aliasParams.computeIfAbsent(alias, s -> new ContentParams()).getFeishuCustomRobot().put(key, value);
         return (T) this;
     }
 
     public T addFeishuMessage(String alias, String key, Object value) {
-        aliasParams.get(alias).getFeishuMessage().put(key, value);
+        aliasParams.computeIfAbsent(alias, s -> new ContentParams()).getFeishuMessage().put(key, value);
         return (T) this;
     }
 
     public T addWeixinMessage(String alias, String key, Object value) {
-        aliasParams.get(alias).getWeixinMessage().put(key, value);
+        aliasParams.computeIfAbsent(alias, s -> new ContentParams()).getWeixinMessage().put(key, value);
         return (T) this;
     }
 
     public T addMailSmtp(String alias, String key, Object value) {
-        aliasParams.get(alias).getMailSmtp().put(key, value);
+        aliasParams.computeIfAbsent(alias, s -> new ContentParams()).getMailSmtp().put(key, value);
         return (T) this;
+    }
+
+    public T addDingtalkCustomRobot(MessageType messageType, String key, Object value) {
+        messageTypeParams.computeIfAbsent(messageType, s -> new ContentParams()).getDingtalkCustomRobot().put(key, value);
+        return (T) this;
+    }
+
+    public T addDingtalkMessage(MessageType messageType, String key, Object value) {
+        messageTypeParams.computeIfAbsent(messageType, s -> new ContentParams()).getDingtalkMessage().put(key, value);
+        return (T) this;
+    }
+
+    public T addFeishuCustomRobot(MessageType messageType, String key, Object value) {
+        messageTypeParams.computeIfAbsent(messageType, s -> new ContentParams()).getFeishuCustomRobot().put(key, value);
+        return (T) this;
+    }
+
+    public T addFeishuMessage(MessageType messageType, String key, Object value) {
+        messageTypeParams.computeIfAbsent(messageType, s -> new ContentParams()).getFeishuMessage().put(key, value);
+        return (T) this;
+    }
+
+    public T addWeixinMessage(MessageType messageType, String key, Object value) {
+        messageTypeParams.computeIfAbsent(messageType, s -> new ContentParams()).getWeixinMessage().put(key, value);
+        return (T) this;
+    }
+
+    public T addMailSmtp(MessageType messageType, String key, Object value) {
+        messageTypeParams.computeIfAbsent(messageType, s -> new ContentParams()).getMailSmtp().put(key, value);
+        return (T) this;
+    }
+
+    public ContentParams getContentParams(String alias, MessageType messageType) {
+        if (aliasParams.containsKey(alias)) return aliasParams.get(alias);
+        if (messageTypeParams.containsKey(messageType)) return messageTypeParams.get(messageType);
+        return params;
     }
 }
