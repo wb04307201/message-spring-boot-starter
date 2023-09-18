@@ -197,11 +197,21 @@ public class DemoController {
 > 比如使用钉钉自定义机器人发送群消息时，会出现@所有人或者@某个人的需求
 > 使用钉钉消息的时候，也需要指定特定用户
 > 这是需要额外的参数协助消息发往正确的目标
+> 下面的示例是为钉钉自定义机器人增加 @所有人 参数
 
 ```java
-
-
+                RequestContent.buildMarkdown()
+                        .addDingtalkCustomRobot("isAtAll", Boolean.TRUE) //根据消息通道类型添加参数
+                        .addDingtalkCustomRobot("dd-1", "isAtAll", Boolean.TRUE) //根据消息通道别名添加参数，优先级更大
+                        .title("测试消息")
+                        .addLine(SubLine.text("这是一行文本"));
 ```
+###### 1. 钉钉自定义机器人支持参数
+| 参数        | 参数类型         | 说明           |
+|-----------|--------------|--------------|
+| atMobiles | List<String> | 被@人的手机号      |
+| atUserIds | List<String> | 被@人的用户userid |
+| isAtAll   | Boolean      | 是否@所有人       |
 
 ## 其他1：内置界面
 
