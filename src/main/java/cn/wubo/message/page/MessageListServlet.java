@@ -33,6 +33,7 @@ public class MessageListServlet extends HttpServlet {
         if (req.getMethod().equalsIgnoreCase("post")) {
             Map<String, String[]> map = req.getParameterMap();
             messageRecord.setAlias(map.get("alias")[0]);
+            messageRecord.setType(map.get("type")[0]);
             messageRecord.setContent(map.get("content")[0]);
             messageRecord.setResponse(map.get("response")[0]);
         }

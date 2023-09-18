@@ -28,7 +28,7 @@ public class MemMessageRecordServiceImpl implements IMessageRecordService {
 
     @Override
     public List<MessageRecord> list(MessageRecord messageRecord) {
-        return messageRecordList.stream().filter(e -> !StringUtils.hasLength(messageRecord.getAlias()) || messageRecord.getAlias().contains(e.getAlias())).filter(e -> !StringUtils.hasLength(messageRecord.getContent()) || e.getContent().contains(messageRecord.getContent())).filter(e -> !StringUtils.hasLength(messageRecord.getResponse()) || e.getResponse().contains(messageRecord.getResponse())).collect(Collectors.toList());
+        return messageRecordList.stream().filter(e -> !StringUtils.hasLength(messageRecord.getAlias()) || messageRecord.getAlias().contains(e.getAlias())).filter(e -> !StringUtils.hasLength(messageRecord.getType()) || messageRecord.getType().contains(e.getType())).filter(e -> !StringUtils.hasLength(messageRecord.getContent()) || e.getContent().contains(messageRecord.getContent())).filter(e -> !StringUtils.hasLength(messageRecord.getResponse()) || e.getResponse().contains(messageRecord.getResponse())).collect(Collectors.toList());
     }
 
     @Override

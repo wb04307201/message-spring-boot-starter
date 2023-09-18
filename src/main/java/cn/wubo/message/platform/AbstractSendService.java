@@ -19,7 +19,7 @@ public abstract class AbstractSendService<T extends MessageBase> implements ISen
     }
 
     public String send(T aliasProperties, Object content) {
-        MessageRecord messageRecord = this.beforeSend(MessageType.getMessageType(aliasProperties).name(), JSON.toJSONString(content));
+        MessageRecord messageRecord = this.beforeSend(aliasProperties, content);
         String res;
         if (content instanceof MarkdownContent) {
             res = sendMarkdown(aliasProperties, (MarkdownContent) content);
@@ -33,10 +33,11 @@ public abstract class AbstractSendService<T extends MessageBase> implements ISen
         return res;
     }
 
-    private MessageRecord beforeSend(String aliasProperties, String content) {
+    private MessageRecord beforeSend(T aliasProperties, Object content) {
         MessageRecord messageRecord = new MessageRecord();
-        messageRecord.setAlias(aliasProperties);
-        messageRecord.setContent(content);
+        messageRecord.setAlias(aliasProperties.getAlias());
+        messageRecord.setAlias(MessageType.getMessageType(aliasProperties).name());
+        messageRecord.setContent(JSON.toJSONString(content));
         messageRecord.setCreateTime(new Date());
         return messageRecordService.save(messageRecord);
     }

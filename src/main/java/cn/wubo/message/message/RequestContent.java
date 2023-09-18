@@ -10,8 +10,8 @@ public abstract class RequestContent<T> {
     protected List<String> alias = new ArrayList<>();
     protected List<MessageType> messageType = new ArrayList<>();
     protected ContentParams params = new ContentParams();
-    protected Map<MessageType, ContentParams> messageTypeParams = new HashMap<>();
     protected Map<String, ContentParams> aliasParams = new HashMap<>();
+    protected Map<MessageType, ContentParams> messageTypeParams = new HashMap<>();
 
     public static TextContent buildText() {
         return new TextContent();
