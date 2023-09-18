@@ -183,13 +183,13 @@ public class DemoController {
 
 行数据类型与转换格式对照表
 
-| message       | 钉钉         | 微信           | 飞书   | 邮件            |
-|---------------|------------|--------------|------|---------------|
-| SubLine.text  | Markdown文字 | Markdown文字   | text | \<p>          |
-| SubLine.title | Markdown标题 | Markdown标题   | text | \<h1>~\<h6>   |
-| SubLine.link  | Markdown链接 | Markdown链接   | a    | \<a>          |
-| SubLine.quote | Markdown引用 | Markdown引用文字 | text | \<blockquote> |
-| SubLine.bold  | Markdown加粗 | Markdown加粗   | text | \<strong>     |
+| message       | 钉钉           | 微信           | 飞书        | 邮件                  |
+|---------------|--------------|--------------|-----------|---------------------|
+| SubLine.text  | Markdown: 文字 | Markdown: 文字 | 文本标签：text | html: \<p>          |
+| SubLine.title | Markdown: 标题 | Markdown: 标题 | 文本标签：text | html: \<h1>~\<h6>   |
+| SubLine.link  | Markdown: 链接 | Markdown: 链接 | 超链接标签：a   | html: \<a>          |
+| SubLine.quote | Markdown: 引用 | Markdown: 引用 | 文本标签：text | html: \<blockquote> |
+| SubLine.bold  | Markdown: 加粗 | Markdown: 加粗 | 文本标签：text | html: \<strong>     |
 
 #### 2.根据别名、消息通道类型配置额外参数
 
