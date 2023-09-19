@@ -26,8 +26,8 @@ public class MessageConfiguration {
 
     @Bean
     public MessageService messageService(MessageConfigurationProperties properties, List<IMessageRecordService> messageRecordServiceList) {
-        IMessageRecordService chatbotRecord = messageRecordServiceList.stream().filter(obj -> obj.getClass().getName().equals(properties.getMessageRecord())).findAny().orElseThrow(() -> new MessageRuntimeException(String.format("未找到%s对应的bean，无法加载IMessageRecordService！", properties.getMessageRecord())));
-        chatbotRecord.init();
+        IMessageRecordService messageRecordService = messageRecordServiceList.stream().filter(obj -> obj.getClass().getName().equals(properties.getMessageRecord())).findAny().orElseThrow(() -> new MessageRuntimeException(String.format("未找到%s对应的bean，无法加载IMessageRecordService！", properties.getMessageRecord())));
+        messageRecordService.init();
         List<MessageBase> aliases = new ArrayList<>();
         aliases.addAll(properties.getDingtalk().getCustomRobot());
         aliases.addAll(properties.getDingtalk().getMessage());
@@ -36,7 +36,7 @@ public class MessageConfiguration {
         aliases.addAll(properties.getWeixin().getCustomRobot());
         aliases.addAll(properties.getWeixin().getCustomRobot());
         aliases.addAll(properties.getMail().getSmtp());
-        return new MessageService(aliases, chatbotRecord);
+        return new MessageService(aliases, messageRecordService);
     }
 
     @Bean
