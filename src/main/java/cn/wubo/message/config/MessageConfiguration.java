@@ -26,7 +26,7 @@ public class MessageConfiguration {
 
     @Bean
     public MessageService messageService(MessageConfigurationProperties properties, List<IMessageRecordService> messageRecordServiceList) {
-        IMessageRecordService chatbotRecord = messageRecordServiceList.stream().filter(obj -> obj.getClass().getName().equals(properties.getMessageRecord())).findAny().orElseThrow(() -> new MessageRuntimeException(String.format("未找到%s对应的bean，无法加载IChatbotRecord！", properties.getMessageRecord())));
+        IMessageRecordService chatbotRecord = messageRecordServiceList.stream().filter(obj -> obj.getClass().getName().equals(properties.getMessageRecord())).findAny().orElseThrow(() -> new MessageRuntimeException(String.format("未找到%s对应的bean，无法加载IMessageRecordService！", properties.getMessageRecord())));
         List<MessageBase> aliases = new ArrayList<>();
         aliases.addAll(properties.getDingtalk().getCustomRobot());
         aliases.addAll(properties.getDingtalk().getMessage());
@@ -41,7 +41,7 @@ public class MessageConfiguration {
     @Bean
     public ServletRegistrationBean<HttpServlet> chatBotListServlet(List<IMessageRecordService> messageRecordServiceList) {
         ServletRegistrationBean<HttpServlet> registration = new ServletRegistrationBean<>();
-        registration.setServlet(new MessageListServlet(messageRecordServiceList.stream().filter(obj -> obj.getClass().getName().equals(properties.getMessageRecord())).findAny().orElseThrow(() -> new MessageRuntimeException(String.format("未找到%s对应的bean，无法加载IChatbotRecord！", properties.getMessageRecord())))));
+        registration.setServlet(new MessageListServlet(messageRecordServiceList.stream().filter(obj -> obj.getClass().getName().equals(properties.getMessageRecord())).findAny().orElseThrow(() -> new MessageRuntimeException(String.format("未找到%s对应的bean，无法加载IMessageRecordService！", properties.getMessageRecord())))));
         registration.addUrlMappings("/message/list");
         return registration;
     }
