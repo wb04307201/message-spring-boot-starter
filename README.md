@@ -27,7 +27,7 @@
 <dependency>
     <groupId>com.gitee.wb04307201</groupId>
     <artifactId>message-spring-boot-starter</artifactId>
-    <version>开发中</version>
+    <version>1.0.0</version>
 </dependency>
 ```
 
