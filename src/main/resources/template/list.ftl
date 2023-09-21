@@ -43,7 +43,7 @@
         </div>
         <div class="col-6">
             <label class="form-check-label" for="request">请求内容</label>
-            <input type="text" class="form-control" id="request" name="request"
+            <input type="text" class="form-control" id="content" name="content"
                    aria-describedby="请求内容"
                    value="${(query.request)!''}">
         </div>
@@ -77,7 +77,7 @@
                             <th scope="row">${row_index + 1}</th>
                             <td>${row.type!'-'}</td>
                             <td>${row.alias!'-'}</td>
-                            <td>${row.request!'-'}</td>
+                            <td>${row.content!'-'}</td>
                             <td>${row.response!'-'}</td>
                         </tr>
                     </#list>

@@ -17,7 +17,7 @@ import java.util.Objects;
 @Slf4j
 public class WeixinMessageServiceImpl extends AbstractSendService<WeixinPrpperties.Message> {
 
-    protected WeixinMessageServiceImpl(IMessageRecordService messageRecordService) {
+    public WeixinMessageServiceImpl(IMessageRecordService messageRecordService) {
         super(messageRecordService);
     }
 

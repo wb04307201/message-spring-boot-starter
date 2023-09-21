@@ -21,12 +21,12 @@ public abstract class RequestContent<T> {
     }
 
     public T addAlias(String... alias) {
-        this.alias.add(Arrays.toString(alias));
+        Collections.addAll(this.alias, alias);
         return (T) this;
     }
 
-    public T addMessageType(MessageType messageType) {
-        this.messageType.add(messageType);
+    public T addMessageType(MessageType... messageType) {
+        Collections.addAll(this.messageType, messageType);
         return (T) this;
     }
 

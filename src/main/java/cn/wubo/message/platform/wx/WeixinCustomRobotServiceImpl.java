@@ -15,7 +15,7 @@ import java.util.Map;
 @Slf4j
 public class WeixinCustomRobotServiceImpl extends AbstractSendService<WeixinPrpperties.CustomRobot> {
 
-    protected WeixinCustomRobotServiceImpl(IMessageRecordService messageRecordService) {
+    public WeixinCustomRobotServiceImpl(IMessageRecordService messageRecordService) {
         super(messageRecordService);
     }
 

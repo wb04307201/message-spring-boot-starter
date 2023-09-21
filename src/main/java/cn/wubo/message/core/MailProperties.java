@@ -12,7 +12,6 @@ public class MailProperties {
     private List<Smtp> smtp = new ArrayList<>();
 
     @Data
-    @Builder
     public static class Smtp extends MessageBase {
         private String host;
         private String from;

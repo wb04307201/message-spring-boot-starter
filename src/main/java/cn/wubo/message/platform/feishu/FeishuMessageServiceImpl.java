@@ -26,7 +26,7 @@ import java.util.Map;
 @Slf4j
 public class FeishuMessageServiceImpl extends AbstractSendService<FeishuProperties.Message> {
 
-    protected FeishuMessageServiceImpl(IMessageRecordService messageRecordService) {
+    public FeishuMessageServiceImpl(IMessageRecordService messageRecordService) {
         super(messageRecordService);
     }
 

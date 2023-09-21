@@ -2,7 +2,6 @@ package cn.wubo.message.record.impl;
 
 import cn.wubo.message.record.IMessageRecordService;
 import cn.wubo.message.record.MessageRecord;
-import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
@@ -10,7 +9,6 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-@Component
 public class MemMessageRecordServiceImpl implements IMessageRecordService {
 
     private static List<MessageRecord> messageRecordList = new ArrayList<>();

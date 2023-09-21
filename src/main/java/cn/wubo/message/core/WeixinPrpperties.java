@@ -1,6 +1,5 @@
 package cn.wubo.message.core;
 
-import lombok.Builder;
 import lombok.Data;
 
 import java.util.ArrayList;
@@ -16,7 +15,6 @@ public class WeixinPrpperties {
      * https://developer.work.weixin.qq.com/document/path/99110
      */
     @Data
-    @Builder
     public static class CustomRobot extends MessageBase {
         private String key;
     }
@@ -26,7 +24,6 @@ public class WeixinPrpperties {
      * https://developer.work.weixin.qq.com/document/path/90236
      */
     @Data
-    @Builder
     public static class Message extends MessageBase {
         private String corpid;
         private String corpsecret;

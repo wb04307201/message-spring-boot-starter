@@ -24,7 +24,7 @@ import java.util.Objects;
 @Slf4j
 public class DingtalkCustomRobotServiceImpl extends AbstractSendService<DingtalkProperties.CustomRobot> {
 
-    protected DingtalkCustomRobotServiceImpl(IMessageRecordService messageRecordService) {
+    public DingtalkCustomRobotServiceImpl(IMessageRecordService messageRecordService) {
         super(messageRecordService);
     }
 

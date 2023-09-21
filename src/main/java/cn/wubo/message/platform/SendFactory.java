@@ -10,7 +10,7 @@ public class SendFactory {
 
     public static String run(MessageBase messageBase, Object content, IMessageRecordService messageRecordService) throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
         Class<? extends ISendService> clazz = MessageType.getClass(messageBase);
-        ISendService sendService = clazz.getConstructor().newInstance(messageRecordService);
+        ISendService sendService = clazz.getConstructor(IMessageRecordService.class).newInstance(messageRecordService);
         return sendService.send(messageBase, content);
     }
 }

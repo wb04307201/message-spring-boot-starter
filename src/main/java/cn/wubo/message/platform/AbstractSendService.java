@@ -14,7 +14,7 @@ import java.util.Date;
 public abstract class AbstractSendService<T extends MessageBase> implements ISendService<T> {
     protected IMessageRecordService messageRecordService;
 
-    protected AbstractSendService(IMessageRecordService messageRecordService) {
+    public AbstractSendService(IMessageRecordService messageRecordService) {
         this.messageRecordService = messageRecordService;
     }
 

@@ -22,7 +22,6 @@ public class DingtalkProperties {
      * https://open.dingtalk.com/document/orgapp/custom-bot-to-send-group-chat-messages
      */
     @Data
-    @Builder
     public static class CustomRobot extends MessageBase {
         private String accessToken;
         private String secret;
@@ -33,7 +32,6 @@ public class DingtalkProperties {
      * https://open.dingtalk.com/document/orgapp/asynchronous-sending-of-enterprise-session-messages
      */
     @Data
-    @Builder
     public static class Message extends MessageBase {
         private String appkey;
         private String appsecret;

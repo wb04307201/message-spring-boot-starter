@@ -19,7 +19,7 @@ import java.util.Objects;
 @Slf4j
 public class DingtalkMessageServiceImpl extends AbstractSendService<DingtalkProperties.Message> {
 
-    protected DingtalkMessageServiceImpl(IMessageRecordService messageRecordService) {
+    public DingtalkMessageServiceImpl(IMessageRecordService messageRecordService) {
         super(messageRecordService);
     }
 

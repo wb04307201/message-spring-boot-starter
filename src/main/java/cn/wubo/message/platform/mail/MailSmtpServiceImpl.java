@@ -16,8 +16,7 @@ import javax.mail.MessagingException;
 @Slf4j
 public class MailSmtpServiceImpl extends AbstractSendService<MailProperties.Smtp> {
 
-
-    protected MailSmtpServiceImpl(IMessageRecordService messageRecordService) {
+    public MailSmtpServiceImpl(IMessageRecordService messageRecordService) {
         super(messageRecordService);
     }
 

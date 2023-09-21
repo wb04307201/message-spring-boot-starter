@@ -5,6 +5,7 @@ import cn.wubo.message.core.MessageService;
 import cn.wubo.message.exception.MessageRuntimeException;
 import cn.wubo.message.page.MessageListServlet;
 import cn.wubo.message.record.IMessageRecordService;
+import cn.wubo.message.record.impl.MemMessageRecordServiceImpl;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
@@ -25,6 +26,11 @@ public class MessageConfiguration {
     }
 
     @Bean
+    public IMessageRecordService messageRecordService() {
+        return new MemMessageRecordServiceImpl();
+    }
+
+    @Bean
     public MessageService messageService(MessageConfigurationProperties properties, List<IMessageRecordService> messageRecordServiceList) {
         IMessageRecordService messageRecordService = messageRecordServiceList.stream().filter(obj -> obj.getClass().getName().equals(properties.getMessageRecord())).findAny().orElseThrow(() -> new MessageRuntimeException(String.format("未找到%s对应的bean，无法加载IMessageRecordService！", properties.getMessageRecord())));
         messageRecordService.init();
@@ -40,7 +46,7 @@ public class MessageConfiguration {
     }
 
     @Bean
-    public ServletRegistrationBean<HttpServlet> chatBotListServlet(List<IMessageRecordService> messageRecordServiceList) {
+    public ServletRegistrationBean<HttpServlet> messageListServlet(List<IMessageRecordService> messageRecordServiceList) {
         ServletRegistrationBean<HttpServlet> registration = new ServletRegistrationBean<>();
         registration.setServlet(new MessageListServlet(messageRecordServiceList.stream().filter(obj -> obj.getClass().getName().equals(properties.getMessageRecord())).findAny().orElseThrow(() -> new MessageRuntimeException(String.format("未找到%s对应的bean，无法加载IMessageRecordService！", properties.getMessageRecord())))));
         registration.addUrlMappings("/message/list");

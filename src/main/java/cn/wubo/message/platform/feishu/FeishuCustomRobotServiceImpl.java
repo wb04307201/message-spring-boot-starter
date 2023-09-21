@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class FeishuCustomRobotServiceImpl extends AbstractSendService<FeishuProperties.CustomRobot> {
 
-    protected FeishuCustomRobotServiceImpl(IMessageRecordService messageRecordService) {
+    public FeishuCustomRobotServiceImpl(IMessageRecordService messageRecordService) {
         super(messageRecordService);
     }
 
