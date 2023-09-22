@@ -257,30 +257,28 @@ public class DemoController {
 
 ```java
 //可以通过如下方法添加平台信息
-chatbotService.addDingtalk
-        chatbotService.addFeishu
-        chatbotService.addWeixin
-        chatbotService.addMail
+messageService.add
 
 //可以通过如下方法删除平台信息
-        chatbotService.removeByAlias
+messageService.removeByAlias
 ```
 
 ## 其他3：实际使用中，可通过配置和实现日志接口方法将数据持久化到数据库中
 
-继承IChatbotRecord并实现方法，例如
+继承IMessageRecordService并实现方法，例如
 
 ```java
 
 @Component
-public class H2ChatbotRecordImpl implements IChatbotRecord {
+@Component
+public class H2MessageRecordImpl implements IMessageRecordService {
 
-    private static final String HISTORY = "chat_robot_history";
+    private static final String HISTORY = "message_history";
 
     private static ConnectionPool connectionPool = new ConnectionPool(new ConnectionParam());
 
     @Override
-    public ChatbotHistory save(ChatbotHistory messageRecord) {
+    public MessageRecord save(MessageRecord messageRecord) {
         try {
             Connection conn = connectionPool.getConnection();
             if (!StringUtils.hasLength(messageRecord.getId())) {
@@ -297,24 +295,24 @@ public class H2ChatbotRecordImpl implements IChatbotRecord {
     }
 
     @Override
-    public List<ChatbotHistory> list(ChatbotHistory messageRecord) {
+    public List<MessageRecord> list(MessageRecord messageRecord) {
         try {
             Connection conn = connectionPool.getConnection();
-            String sql = ModelSqlUtils.selectSql(HISTORY, new ChatbotHistory());
+            String sql = ModelSqlUtils.selectSql(HISTORY, new MessageRecord());
 
             List<String> condition = new ArrayList<>();
             if (StringUtils.hasLength(messageRecord.getType()))
                 condition.add(" type = '" + messageRecord.getType() + "'");
             if (StringUtils.hasLength(messageRecord.getAlias()))
                 condition.add(" alias like '%" + messageRecord.getAlias() + "%'");
-            if (StringUtils.hasLength(messageRecord.getRequest()))
-                condition.add(" request like '%" + messageRecord.getRequest() + "%'");
+            if (StringUtils.hasLength(messageRecord.getContent()))
+                condition.add(" content like '%" + messageRecord.getContent() + "%'");
             if (StringUtils.hasLength(messageRecord.getResponse()))
                 condition.add(" response like '%" + messageRecord.getResponse() + "%'");
 
             if (!condition.isEmpty()) sql = sql + " where " + String.join("and", condition);
 
-            List<ChatbotHistory> res = ExecuteSqlUtils.executeQuery(conn, sql, new HashMap<>(), ChatbotHistory.class);
+            List<MessageRecord> res = ExecuteSqlUtils.executeQuery(conn, sql, new HashMap<>(), MessageRecord.class);
             connectionPool.returnConnection(conn);
             return res;
         } catch (SQLException | InterruptedException e) {
@@ -327,7 +325,7 @@ public class H2ChatbotRecordImpl implements IChatbotRecord {
         try {
             Connection conn = connectionPool.getConnection();
             if (!ExecuteSqlUtils.isTableExists(conn, HISTORY, connectionPool.getDbType())) {
-                ExecuteSqlUtils.executeUpdate(conn, ModelSqlUtils.createSql(HISTORY, new ChatbotHistory()), new HashMap<>());
+                ExecuteSqlUtils.executeUpdate(conn, ModelSqlUtils.createSql(HISTORY, new MessageRecord()), new HashMap<>());
             }
         } catch (SQLException | InterruptedException e) {
             throw new RuntimeException(e);
@@ -339,7 +337,10 @@ public class H2ChatbotRecordImpl implements IChatbotRecord {
 并添加配置指向类
 
 ```yaml
-chatbot:
-  config:
-    chatbot-record: cn.wubo.message.demo.H2ChatbotRecordImpl
+message:
+  messageRecord: cn.wubo.message.H2MessageRecordImpl
 ```
+
+## 待办
+
+- [ ] *钉钉token增加缓存*
