@@ -40,7 +40,7 @@ public class MessageService {
         return strings;
     }
 
-    private void add(MessageBase messageBase) {
+    public void add(MessageBase messageBase) {
         aliases.stream().filter(e -> e.getAlias().equals(messageBase.getAlias())).findAny().ifPresent(e -> aliases.remove(e));
         aliases.add(messageBase);
     }
