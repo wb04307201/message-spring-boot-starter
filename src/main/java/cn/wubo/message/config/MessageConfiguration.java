@@ -38,9 +38,9 @@ public class MessageConfiguration {
         aliases.addAll(properties.getDingtalk().getCustomRobot());
         aliases.addAll(properties.getDingtalk().getMessage());
         aliases.addAll(properties.getFeishu().getCustomRobot());
-        aliases.addAll(properties.getFeishu().getCustomRobot());
+        aliases.addAll(properties.getFeishu().getMessage());
         aliases.addAll(properties.getWeixin().getCustomRobot());
-        aliases.addAll(properties.getWeixin().getCustomRobot());
+        aliases.addAll(properties.getWeixin().getMessage());
         aliases.addAll(properties.getMail().getSmtp());
         return new MessageService(aliases, messageRecordService);
     }
