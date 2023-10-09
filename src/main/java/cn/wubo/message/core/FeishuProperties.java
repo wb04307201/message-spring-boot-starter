@@ -1,6 +1,5 @@
 package cn.wubo.message.core;
 
-import lombok.Builder;
 import lombok.Data;
 
 import java.util.ArrayList;

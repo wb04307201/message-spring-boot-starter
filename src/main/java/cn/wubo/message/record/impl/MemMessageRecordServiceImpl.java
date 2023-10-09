@@ -31,5 +31,6 @@ public class MemMessageRecordServiceImpl implements IMessageRecordService {
 
     @Override
     public void init() {
+        // TODO 做一些初始化
     }
 }

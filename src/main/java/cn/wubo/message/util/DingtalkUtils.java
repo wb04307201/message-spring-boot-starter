@@ -17,9 +17,12 @@ import java.security.NoSuchAlgorithmException;
 
 public class DingtalkUtils {
 
-    private final static String WEBHOOK = "https://oapi.dingtalk.com/robot/send?access_token=%s&timestamp=%s&sign=%s";
-    private final static String GET_TOKEN = "https://oapi.dingtalk.com/gettoken";
-    private final static String MESSAGE = "https://oapi.dingtalk.com/topapi/message/corpconversation/asyncsend_v2?access_token=%s";
+    private DingtalkUtils() {
+    }
+
+    private static final String WEBHOOK = "https://oapi.dingtalk.com/robot/send?access_token=%s&timestamp=%s&sign=%s";
+    private static final String GET_TOKEN = "https://oapi.dingtalk.com/gettoken";
+    private static final String MESSAGE = "https://oapi.dingtalk.com/topapi/message/corpconversation/asyncsend_v2?access_token=%s";
 
 
     public static DingTalkClient getCustomRobotClient(String accessToken, String secret) throws NoSuchAlgorithmException, UnsupportedEncodingException, InvalidKeyException {

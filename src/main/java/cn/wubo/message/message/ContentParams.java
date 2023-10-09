@@ -9,8 +9,8 @@ import java.util.Map;
 public class ContentParams {
     private Map<String, Object> dingtalkCustomRobot = new HashMap<>();
     private Map<String, Object> dingtalkMessage = new HashMap<>();
-    private Map<String, Object> FeishuCustomRobot = new HashMap<>();
-    private Map<String, Object> FeishuMessage = new HashMap<>();
-    private Map<String, Object> WeixinMessage = new HashMap<>();
-    private Map<String, Object> MailSmtp = new HashMap<>();
+    private Map<String, Object> feishuCustomRobot = new HashMap<>();
+    private Map<String, Object> feishuMessage = new HashMap<>();
+    private Map<String, Object> weixinMessage = new HashMap<>();
+    private Map<String, Object> mailSmtp = new HashMap<>();
 }

@@ -12,7 +12,7 @@ import cn.wubo.message.platform.wx.WeixinMessageServiceImpl;
 import lombok.Getter;
 
 import java.util.Arrays;
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.Map;
 
 public enum MessageType {
@@ -31,7 +31,7 @@ public enum MessageType {
         return Arrays.stream(MessageType.values()).filter(messageType -> messageBase.getClass().getName().equals(messageType.getClassName())).findAny().orElseThrow(() -> new MessageRuntimeException("未知的消息配置！"));
     }
 
-    private static final Map<MessageType, Class<? extends ISendService>> MESSAGE_TYPE_MAPPER = new HashMap<>();
+    private static final Map<MessageType, Class<? extends ISendService<? extends MessageBase>>> MESSAGE_TYPE_MAPPER = new EnumMap<>(MessageType.class);
 
     static {
         MESSAGE_TYPE_MAPPER.put(MessageType.DingtalkCustomRobot, DingtalkCustomRobotServiceImpl.class);
@@ -43,7 +43,7 @@ public enum MessageType {
         MESSAGE_TYPE_MAPPER.put(MessageType.MailSmtp, MailSmtpServiceImpl.class);
     }
 
-    public static Class<? extends ISendService> getClass(MessageBase messageBase) {
-        return MESSAGE_TYPE_MAPPER.get(getMessageType(messageBase));
+    public static <T extends ISendService<R>, R extends MessageBase> Class<T> getClass(R messageBase) {
+        return (Class<T>) MESSAGE_TYPE_MAPPER.get(getMessageType(messageBase));
     }
 }

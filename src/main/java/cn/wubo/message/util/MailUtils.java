@@ -12,6 +12,9 @@ import java.util.Properties;
 
 public class MailUtils {
 
+    private MailUtils() {
+    }
+
     public static void smtp(String host, String from, String to, String username, String password, String title, String body) throws MessagingException {
         //1.创建参数配置, 用于连接邮件服务器的参数配置
         Properties props = new Properties();                    //参数配置
@@ -21,8 +24,7 @@ public class MailUtils {
 
         //2.根据配置创建会话对象, 用于和邮件服务器交互
         Session session = Session.getInstance(props);
-        //设置为debug模式,可以查看详细的发送log
-        //session.setDebug(true);
+        //设置为debug模式,可以查看详细的发送log session.setDebug(true);
 
         //3.构造邮件
         MimeMessage message = new MimeMessage(session);

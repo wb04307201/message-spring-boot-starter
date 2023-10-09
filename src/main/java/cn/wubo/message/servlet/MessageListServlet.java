@@ -1,4 +1,4 @@
-package cn.wubo.message.page;
+package cn.wubo.message.servlet;
 
 import cn.wubo.message.exception.MessageRuntimeException;
 import cn.wubo.message.record.IMessageRecordService;
@@ -18,7 +18,7 @@ import java.util.Map;
 @Slf4j
 public class MessageListServlet extends HttpServlet {
 
-    private IMessageRecordService messageRecordService;
+    private final IMessageRecordService messageRecordService;
 
     public MessageListServlet(IMessageRecordService messageRecordService) {
         this.messageRecordService = messageRecordService;
@@ -51,7 +51,6 @@ public class MessageListServlet extends HttpServlet {
         } catch (TemplateException e) {
             throw new MessageRuntimeException(e.getMessage(), e);
         }
-
     }
 
     @Override

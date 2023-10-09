@@ -9,9 +9,12 @@ import java.net.URI;
 
 public class WeixinUtils {
 
-    private final static String WEBHOOK = "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=%s";
-    private final static String GET_TOKEN = "https://qyapi.weixin.qq.com/cgi-bin/gettoken?corpid=%s&corpsecret=%s";
-    private final static String MESSAGE = "https://qyapi.weixin.qq.com/cgi-bin/message/send?access_token=%s";
+    private WeixinUtils() {
+    }
+
+    private static final String WEBHOOK = "https://qyapi.weixin.qq.com/cgi-bin/webhook/send?key=%s";
+    private static final String GET_TOKEN = "https://qyapi.weixin.qq.com/cgi-bin/gettoken?corpid=%s&corpsecret=%s";
+    private static final String MESSAGE = "https://qyapi.weixin.qq.com/cgi-bin/message/send?access_token=%s";
 
     public static String requestCustomRobot(String key, String body) {
         RestTemplate restTemplate = new RestTemplate();

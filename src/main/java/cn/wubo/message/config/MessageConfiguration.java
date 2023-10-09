@@ -3,7 +3,7 @@ package cn.wubo.message.config;
 import cn.wubo.message.core.MessageBase;
 import cn.wubo.message.core.MessageService;
 import cn.wubo.message.exception.MessageRuntimeException;
-import cn.wubo.message.page.MessageListServlet;
+import cn.wubo.message.servlet.MessageListServlet;
 import cn.wubo.message.record.IMessageRecordService;
 import cn.wubo.message.record.impl.MemMessageRecordServiceImpl;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;

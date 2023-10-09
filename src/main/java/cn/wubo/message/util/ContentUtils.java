@@ -11,6 +11,9 @@ import java.util.stream.IntStream;
 
 public class ContentUtils {
 
+    private ContentUtils() {
+    }
+
     public static String toMarkdown(MarkdownContent content) {
         return toMarkdown(content, "\n\n");
     }
@@ -49,9 +52,9 @@ public class ContentUtils {
                     temp.put("href", subLinkLine.getLink());
                     break;
                 case BOLD:
-                    SubBoldLine SubBoldLine = (SubBoldLine) line;
+                    SubBoldLine subBoldLine = (SubBoldLine) line;
                     temp.put("tag", "text");
-                    temp.put("text", SubBoldLine.getContent());
+                    temp.put("text", subBoldLine.getContent());
                     temp.put("style", new JSONArray().add("bold"));
                     break;
                 case TEXT:

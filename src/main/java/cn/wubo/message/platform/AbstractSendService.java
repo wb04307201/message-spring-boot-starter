@@ -36,7 +36,7 @@ public abstract class AbstractSendService<T extends MessageBase> implements ISen
     private MessageRecord beforeSend(T aliasProperties, Object content) {
         MessageRecord messageRecord = new MessageRecord();
         messageRecord.setAlias(aliasProperties.getAlias());
-        messageRecord.setAlias(MessageType.getMessageType(aliasProperties).name());
+        messageRecord.setType(MessageType.getMessageType(aliasProperties).name());
         messageRecord.setContent(JSON.toJSONString(content));
         messageRecord.setCreateTime(new Date());
         return messageRecordService.save(messageRecord);

@@ -1,10 +1,8 @@
 package cn.wubo.message.util;
 
-import cn.wubo.message.exception.FeishuRuntimeException;
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
-import org.springframework.util.StringUtils;
 import org.springframework.web.client.RestTemplate;
 
 import javax.crypto.Mac;
@@ -15,7 +13,10 @@ import java.security.NoSuchAlgorithmException;
 
 public class FeishuUtils {
 
-    private final static String WEBHOOK = "https://open.feishu.cn/open-apis/bot/v2/hook/%s";
+    private FeishuUtils() {
+    }
+
+    private static final String WEBHOOK = "https://open.feishu.cn/open-apis/bot/v2/hook/%s";
 
     public static String requestCustomRobot(String hookid, String body) {
         RestTemplate restTemplate = new RestTemplate();

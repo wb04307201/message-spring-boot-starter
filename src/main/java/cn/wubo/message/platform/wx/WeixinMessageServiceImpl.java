@@ -1,6 +1,5 @@
 package cn.wubo.message.platform.wx;
 
-import cn.wubo.message.core.MessageType;
 import cn.wubo.message.core.WeixinPrpperties;
 import cn.wubo.message.message.MarkdownContent;
 import cn.wubo.message.message.TextContent;

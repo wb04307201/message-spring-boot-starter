@@ -19,6 +19,4 @@ public class MarkdownContent extends RequestContent<MarkdownContent> {
         this.lines.add(line);
         return this;
     }
-
-    private ContentParams params = new ContentParams();
 }

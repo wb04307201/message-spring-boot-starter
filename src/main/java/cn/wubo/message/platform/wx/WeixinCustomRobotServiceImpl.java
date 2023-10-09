@@ -10,8 +10,6 @@ import cn.wubo.message.util.WeixinUtils;
 import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.Map;
-
 @Slf4j
 public class WeixinCustomRobotServiceImpl extends AbstractSendService<WeixinPrpperties.CustomRobot> {
 
