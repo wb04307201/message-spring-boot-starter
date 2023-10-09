@@ -27,7 +27,7 @@
 <dependency>
     <groupId>com.gitee.wb04307201</groupId>
     <artifactId>message-spring-boot-starter</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
 </dependency>
 ```
 
@@ -268,8 +268,6 @@ messageService.removeByAlias
 继承IMessageRecordService并实现方法，例如
 
 ```java
-
-@Component
 @Component
 public class H2MessageRecordImpl implements IMessageRecordService {
 
@@ -283,9 +281,11 @@ public class H2MessageRecordImpl implements IMessageRecordService {
             Connection conn = connectionPool.getConnection();
             if (!StringUtils.hasLength(messageRecord.getId())) {
                 messageRecord.setId(UUID.randomUUID().toString());
-                ExecuteSqlUtils.executeUpdate(conn, ModelSqlUtils.insertSql(HISTORY, messageRecord), new HashMap<>());
+                SQL sql = ModelSqlUtils.insertSql(HISTORY, messageRecord);
+                ExecuteSqlUtils.executeUpdate(conn, sql.getParse(), sql.getParams());
             } else {
-                ExecuteSqlUtils.executeUpdate(conn, ModelSqlUtils.updateByIdSql(HISTORY, messageRecord), new HashMap<>());
+                SQL sql = ModelSqlUtils.updateByIdSql(HISTORY, messageRecord);
+                ExecuteSqlUtils.executeUpdate(conn, sql.getParse(), sql.getParams());
             }
             connectionPool.returnConnection(conn);
         } catch (SQLException | InterruptedException e) {
@@ -298,21 +298,17 @@ public class H2MessageRecordImpl implements IMessageRecordService {
     public List<MessageRecord> list(MessageRecord messageRecord) {
         try {
             Connection conn = connectionPool.getConnection();
-            String sql = ModelSqlUtils.selectSql(HISTORY, new MessageRecord());
+            SQL sql = ModelSqlUtils.selectSql(HISTORY, new MessageRecord());
 
-            List<String> condition = new ArrayList<>();
-            if (StringUtils.hasLength(messageRecord.getType()))
-                condition.add(" type = '" + messageRecord.getType() + "'");
-            if (StringUtils.hasLength(messageRecord.getAlias()))
-                condition.add(" alias like '%" + messageRecord.getAlias() + "%'");
-            if (StringUtils.hasLength(messageRecord.getContent()))
-                condition.add(" content like '%" + messageRecord.getContent() + "%'");
+            if (StringUtils.hasLength(messageRecord.getType())) sql.addWhereEQ("type", messageRecord.getType());
+            if (StringUtils.hasLength(messageRecord.getAlias())) sql.addWhereLIKE("alias", messageRecord.getType());
+            if (StringUtils.hasLength(messageRecord.getContent())) sql.addWhereLIKE("content", messageRecord.getType());
             if (StringUtils.hasLength(messageRecord.getResponse()))
-                condition.add(" response like '%" + messageRecord.getResponse() + "%'");
+                sql.addWhereLIKE("response", messageRecord.getType());
 
-            if (!condition.isEmpty()) sql = sql + " where " + String.join("and", condition);
+            sql.parse();
 
-            List<MessageRecord> res = ExecuteSqlUtils.executeQuery(conn, sql, new HashMap<>(), MessageRecord.class);
+            List<MessageRecord> res = ExecuteSqlUtils.executeQuery(conn, sql.getParse(), sql.getParams(), MessageRecord.class);
             connectionPool.returnConnection(conn);
             return res;
         } catch (SQLException | InterruptedException e) {
@@ -324,7 +320,7 @@ public class H2MessageRecordImpl implements IMessageRecordService {
     public void init() {
         try {
             Connection conn = connectionPool.getConnection();
-            if (!ExecuteSqlUtils.isTableExists(conn, HISTORY, connectionPool.getDbType())) {
+            if (!ExecuteSqlUtils.isTableExists(conn, HISTORY, DbType.h2)) {
                 ExecuteSqlUtils.executeUpdate(conn, ModelSqlUtils.createSql(HISTORY, new MessageRecord()), new HashMap<>());
             }
         } catch (SQLException | InterruptedException e) {
