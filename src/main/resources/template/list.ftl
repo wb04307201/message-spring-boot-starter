@@ -42,10 +42,10 @@
                    value="${(query.alias)!''}">
         </div>
         <div class="col-6">
-            <label class="form-check-label" for="request">请求内容</label>
+            <label class="form-check-label" for="content">请求内容</label>
             <input type="text" class="form-control" id="content" name="content"
                    aria-describedby="请求内容"
-                   value="${(query.request)!''}">
+                   value="${(query.content)!''}">
         </div>
         <div class="col-6">
             <label class="form-check-label" for="response">响应内容</label>
