@@ -1,16 +1,14 @@
 package cn.wubo.message.platform.mail;
 
 import cn.wubo.message.core.MailProperties;
-import cn.wubo.message.core.MessageType;
 import cn.wubo.message.message.MarkdownContent;
 import cn.wubo.message.message.TextContent;
 import cn.wubo.message.platform.AbstractSendService;
 import cn.wubo.message.record.IMessageRecordService;
 import cn.wubo.message.util.ContentUtils;
 import cn.wubo.message.util.MailUtils;
+import jakarta.mail.MessagingException;
 import lombok.extern.slf4j.Slf4j;
-
-import javax.mail.MessagingException;
 
 
 @Slf4j
