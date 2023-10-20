@@ -7,7 +7,7 @@ import cn.wubo.message.platform.AbstractSendService;
 import cn.wubo.message.record.IMessageRecordService;
 import cn.wubo.message.util.ContentUtils;
 import cn.wubo.message.util.DingtalkUtils;
-import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson2.JSON;
 import com.dingtalk.api.request.OapiMessageCorpconversationAsyncsendV2Request;
 import com.dingtalk.api.response.OapiGettokenResponse;
 import lombok.extern.slf4j.Slf4j;

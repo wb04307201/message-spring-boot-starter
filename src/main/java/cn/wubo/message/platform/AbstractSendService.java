@@ -7,7 +7,7 @@ import cn.wubo.message.message.MarkdownContent;
 import cn.wubo.message.message.TextContent;
 import cn.wubo.message.record.IMessageRecordService;
 import cn.wubo.message.record.MessageRecord;
-import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson2.JSON;
 
 import java.util.Date;
 

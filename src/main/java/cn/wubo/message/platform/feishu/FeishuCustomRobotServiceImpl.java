@@ -1,15 +1,14 @@
 package cn.wubo.message.platform.feishu;
 
 import cn.wubo.message.core.FeishuProperties;
-import cn.wubo.message.core.MessageType;
 import cn.wubo.message.message.MarkdownContent;
 import cn.wubo.message.message.TextContent;
 import cn.wubo.message.platform.AbstractSendService;
 import cn.wubo.message.record.IMessageRecordService;
 import cn.wubo.message.util.ContentUtils;
 import cn.wubo.message.util.FeishuUtils;
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson2.JSONArray;
+import com.alibaba.fastjson2.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 
 import java.security.InvalidKeyException;

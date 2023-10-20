@@ -7,7 +7,7 @@ import cn.wubo.message.platform.AbstractSendService;
 import cn.wubo.message.record.IMessageRecordService;
 import cn.wubo.message.util.ContentUtils;
 import cn.wubo.message.util.WeixinUtils;
-import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson2.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Map;

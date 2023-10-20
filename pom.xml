@@ -88,7 +88,7 @@
             <dependency>
                 <groupId>org.commonmark</groupId>
                 <artifactId>commonmark</artifactId>
-                <version>0.20.0</version>
+                <version>0.21.0</version>
             </dependency>
             <!-- https://mvnrepository.com/artifact/jakarta.mail/jakarta.mail-api -->
             <dependency>
@@ -123,12 +123,6 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <!-- log4j2依赖包 -->
-        <!--<dependency>
-            <groupId>com.lmax</groupId>
-            <artifactId>disruptor</artifactId>
-            <version>3.3.0</version>
-        </dependency>-->
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-core</artifactId>
