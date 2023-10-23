@@ -25,6 +25,8 @@ import java.util.Map;
 @Slf4j
 public class FeishuMessageServiceImpl extends AbstractSendService<FeishuProperties.Message> {
 
+    private static final String RECEIVE_ID_TYPE = "receive_id_type";
+
     public FeishuMessageServiceImpl(IMessageRecordService messageRecordService) {
         super(messageRecordService);
     }
@@ -38,7 +40,7 @@ public class FeishuMessageServiceImpl extends AbstractSendService<FeishuProperti
         jo.put("zh_cn", post);
         Client client = Client.newBuilder("appId", "appSecret").build();
         Map<String, List<String>> headers = new HashMap<>();
-        headers.put("receive_id_type", Lists.newArrayList((String) content.getParams().getFeishuMessage().get("receive_id_type")));
+        headers.put(RECEIVE_ID_TYPE, Lists.newArrayList((String) content.getParams().getFeishuMessage().get(RECEIVE_ID_TYPE)));
         try {
             CreateMessageResp resp = client.im().message().create(CreateMessageReq.newBuilder().createMessageReqBody(CreateMessageReqBody.newBuilder().receiveId((String) content.getParams().getFeishuMessage().get("receive_id")).msgType("post").content(jo.toJSONString()).build()).build(), RequestOptions.newBuilder().headers(headers).build());
             return JSON.toJSONString(resp);
@@ -54,7 +56,7 @@ public class FeishuMessageServiceImpl extends AbstractSendService<FeishuProperti
         jo.put("text", content.getText());
         Client client = Client.newBuilder("appId", "appSecret").build();
         Map<String, List<String>> headers = new HashMap<>();
-        headers.put("receive_id_type", Lists.newArrayList((String) content.getContentParams(aliasProperties.getAlias()).getFeishuMessage().get("receive_id_type")));
+        headers.put(RECEIVE_ID_TYPE, Lists.newArrayList((String) content.getContentParams(aliasProperties.getAlias()).getFeishuMessage().get(RECEIVE_ID_TYPE)));
         try {
             CreateMessageResp resp = client.im().message().create(CreateMessageReq.newBuilder().createMessageReqBody(CreateMessageReqBody.newBuilder().receiveId((String) content.getParams().getFeishuMessage().get("receive_id")).msgType("text").content(jo.toJSONString()).build()).build(), RequestOptions.newBuilder().headers(headers).build());
             return JSON.toJSONString(resp);

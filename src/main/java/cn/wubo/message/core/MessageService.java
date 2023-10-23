@@ -3,6 +3,7 @@ package cn.wubo.message.core;
 import cn.wubo.message.message.RequestContent;
 import cn.wubo.message.platform.SendFactory;
 import cn.wubo.message.record.IMessageRecordService;
+import cn.wubo.message.record.MessageRecord;
 import lombok.extern.slf4j.Slf4j;
 
 import java.lang.reflect.InvocationTargetException;
@@ -47,5 +48,9 @@ public class MessageService {
 
     public void removeByAlias(String alias) {
         aliases.stream().filter(e -> e.getAlias().equals(alias)).findAny().ifPresent(e -> aliases.remove(e));
+    }
+
+    public List<MessageRecord> list(MessageRecord messageRecord){
+        return messageRecordService.list(messageRecord);
     }
 }

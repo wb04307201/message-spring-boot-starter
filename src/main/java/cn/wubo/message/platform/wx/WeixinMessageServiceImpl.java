@@ -16,6 +16,10 @@ import java.util.Objects;
 @Slf4j
 public class WeixinMessageServiceImpl extends AbstractSendService<WeixinPrpperties.Message> {
 
+    private static final String TOUSER = "touser";
+    private static final String TOPARTY = "toparty";
+    private static final String TOTAG = "totag";
+
     public WeixinMessageServiceImpl(IMessageRecordService messageRecordService) {
         super(messageRecordService);
     }
@@ -40,9 +44,9 @@ public class WeixinMessageServiceImpl extends AbstractSendService<WeixinPrpperti
 
     private JSONObject request(WeixinPrpperties.Message aliasProperties, Map<String, Object> params) {
         JSONObject jo = new JSONObject();
-        if (params.containsKey("touser")) jo.put("touser", params.get("touser"));
-        if (params.containsKey("toparty")) jo.put("toparty", params.get("toparty"));
-        if (params.containsKey("totag")) jo.put("totag", params.get("totag"));
+        if (params.containsKey(TOUSER)) jo.put(TOUSER, params.get(TOUSER));
+        if (params.containsKey(TOPARTY)) jo.put(TOPARTY, params.get(TOPARTY));
+        if (params.containsKey(TOTAG)) jo.put(TOTAG, params.get(TOTAG));
         jo.put("agentid", aliasProperties.getAgentid());
         return jo;
     }

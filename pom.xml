@@ -53,11 +53,11 @@
                 <version>2.21.0</version>
             </dependency>
             <!-- 钉钉 新包 -->
-            <dependency>
+            <!--<dependency>
                 <groupId>com.aliyun</groupId>
                 <artifactId>dingtalk</artifactId>
                 <version>2.0.48</version>
-            </dependency>
+            </dependency>-->
             <!-- 飞书 -->
             <dependency>
                 <groupId>com.larksuite.oapi</groupId>
