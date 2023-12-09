@@ -6,7 +6,9 @@
 > 通过配置和编码，即可将相同的消息通过钉钉自定义机器人、钉钉消息、飞书自定义机器人、飞书消息、企业微信自定义机器人、企业微信消息以及邮箱消息通道进行发送
 > 提供统一消息维护方式，发送时会按照对应的平台类型自动进行转换
 
-## [代码示例](https://gitee.com/wb04307201/message-demo)
+## 代码示例
+1. 使用[消息中间件](https://gitee.com/wb04307201/message-spring-boot-starter)实现的[代码示例](https://gitee.com/wb04307201/message-demo)
+2. 使用[动态调度](https://gitee.com/wb04307201/dynamic-schedule-spring-boot-starter)、[消息中间件](https://gitee.com/wb04307201/message-spring-boot-starter)、[动态编译加载执行工具](https://gitee.com/wb04307201/loader-util)、[实体SQL工具类](https://gitee.com/wb04307201/sql-util)实现的[动态任务调度Demo](https://gitee.com/wb04307201/dynamic-schedule-demo)
 
 ## 第一步 增加 JitPack 仓库
 
