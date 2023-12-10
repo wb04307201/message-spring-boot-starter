@@ -13,7 +13,6 @@
 ## 第一步 增加 JitPack 仓库
 
 ```xml
-
 <repositories>
     <repository>
         <id>jitpack.io</id>
@@ -25,7 +24,6 @@
 ## 第二步 引入jar
 
 ```xml
-
 <dependency>
     <groupId>com.gitee.wb04307201</groupId>
     <artifactId>message-spring-boot-starter</artifactId>
@@ -36,7 +34,6 @@
 ## 第三步 在启动类上加上`@EnableMessage`注解
 
 ```java
-
 @EnableMessage
 @SpringBootApplication
 public class MessageDemoApplication {
