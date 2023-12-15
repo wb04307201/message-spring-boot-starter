@@ -11,7 +11,6 @@
 2. 使用[动态调度](https://gitee.com/wb04307201/dynamic-schedule-spring-boot-starter)、[消息中间件](https://gitee.com/wb04307201/message-spring-boot-starter)、[动态编译加载执行工具](https://gitee.com/wb04307201/loader-util)、[实体SQL工具类](https://gitee.com/wb04307201/sql-util)实现的[动态编码动态任务调度Demo](https://gitee.com/wb04307201/dynamic-schedule-demo)
 
 ## 第一步 增加 JitPack 仓库
-
 ```xml
 <repositories>
     <repository>
@@ -22,17 +21,16 @@
 ```
 
 ## 第二步 引入jar
-
+1.1.0版本后升级到jdk 17 SpringBoot 3.2.0
 ```xml
 <dependency>
     <groupId>com.gitee.wb04307201</groupId>
     <artifactId>message-spring-boot-starter</artifactId>
-    <version>1.0.4</version>
+    <version>1.1.0</version>
 </dependency>
 ```
 
 ## 第三步 在启动类上加上`@EnableMessage`注解
-
 ```java
 @EnableMessage
 @SpringBootApplication

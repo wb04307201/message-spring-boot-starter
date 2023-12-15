@@ -49,7 +49,7 @@ public class MessageConfiguration {
         return new MessageService(aliases, messageRecordService);
     }
 
-    @Bean("wb04307201_message_router")
+    @Bean("wb04307201MessageRouter")
     public RouterFunction<ServerResponse> messageRouter(MessageService messageService) {
         BiFunction<ServerRequest, MessageService, ServerResponse> biFunction = (request, service) -> {
             String contextPath = request.requestPath().contextPath().value();

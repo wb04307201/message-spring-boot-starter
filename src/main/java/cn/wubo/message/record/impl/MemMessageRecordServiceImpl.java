@@ -7,7 +7,6 @@ import org.springframework.util.StringUtils;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 public class MemMessageRecordServiceImpl implements IMessageRecordService {
 
@@ -26,7 +25,8 @@ public class MemMessageRecordServiceImpl implements IMessageRecordService {
 
     @Override
     public List<MessageRecord> list(MessageRecord messageRecord) {
-        return messageRecordList.stream().filter(e -> !StringUtils.hasLength(messageRecord.getAlias()) || messageRecord.getAlias().contains(e.getAlias())).filter(e -> !StringUtils.hasLength(messageRecord.getType()) || messageRecord.getType().contains(e.getType())).filter(e -> !StringUtils.hasLength(messageRecord.getContent()) || e.getContent().contains(messageRecord.getContent())).filter(e -> !StringUtils.hasLength(messageRecord.getResponse()) || e.getResponse().contains(messageRecord.getResponse())).collect(Collectors.toList());
+        return messageRecordList.stream().filter(e -> !StringUtils.hasLength(messageRecord.getAlias()) || messageRecord.getAlias().contains(e.getAlias())).filter(e -> !StringUtils.hasLength(messageRecord.getType()) || messageRecord.getType().contains(e.getType())).filter(e -> !StringUtils.hasLength(messageRecord.getContent()) || e.getContent().contains(messageRecord.getContent())).filter(e -> !StringUtils.hasLength(messageRecord.getResponse()) || e.getResponse().contains(messageRecord.getResponse())).toList();
+
     }
 
     @Override
