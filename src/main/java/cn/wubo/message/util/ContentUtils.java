@@ -42,32 +42,30 @@ public class ContentUtils {
 
     public static JSONArray toPost(MarkdownContent content) {
         JSONArray ja = new JSONArray();
-        content.getLines().stream().forEach(line -> {
-            ja.add(switch (line.getLineType()) {
-                case LINK -> {
-                    JSONObject temp = new JSONObject();
-                    SubLinkLine subLinkLine = (SubLinkLine) line;
-                    temp.put("tag", "a");
-                    temp.put("text", subLinkLine.getContent());
-                    temp.put("href", subLinkLine.getLink());
-                    yield temp;
-                }
-                case BOLD -> {
-                    JSONObject temp = new JSONObject();
-                    SubBoldLine subBoldLine = (SubBoldLine) line;
-                    temp.put("tag", "text");
-                    temp.put("text", subBoldLine.getContent());
-                    temp.put("style", new JSONArray().add("bold"));
-                    yield temp;
-                }
-                case TEXT, TITLE, QUOTE -> {
-                    JSONObject temp = new JSONObject();
-                    temp.put("tag", "text");
-                    temp.put("text", line.getContent());
-                    yield temp;
-                }
-            });
-        });
+        content.getLines().stream().forEach(line -> ja.add(switch (line.getLineType()) {
+            case LINK -> {
+                JSONObject temp = new JSONObject();
+                SubLinkLine subLinkLine = (SubLinkLine) line;
+                temp.put("tag", "a");
+                temp.put("text", subLinkLine.getContent());
+                temp.put("href", subLinkLine.getLink());
+                yield temp;
+            }
+            case BOLD -> {
+                JSONObject temp = new JSONObject();
+                SubBoldLine subBoldLine = (SubBoldLine) line;
+                temp.put("tag", "text");
+                temp.put("text", subBoldLine.getContent());
+                temp.put("style", new JSONArray().add("bold"));
+                yield temp;
+            }
+            case TEXT, TITLE, QUOTE -> {
+                JSONObject temp = new JSONObject();
+                temp.put("tag", "text");
+                temp.put("text", line.getContent());
+                yield temp;
+            }
+        }));
         return ja;
     }
 

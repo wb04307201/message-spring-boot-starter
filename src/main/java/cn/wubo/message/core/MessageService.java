@@ -55,7 +55,7 @@ public class MessageService {
      *
      * @param messageBase 要添加的消息基本信息
      */
-    public void add(MessageBase messageBase) {
+    public synchronized void add(MessageBase messageBase) {
         aliases.stream().filter(e -> e.getAlias().equals(messageBase.getAlias())).findAny().ifPresent(e -> aliases.remove(e));
         aliases.add(messageBase);
     }
@@ -65,7 +65,7 @@ public class MessageService {
      * 根据别名移除对象
      * @param alias 别名
      */
-    public void removeByAlias(String alias) {
+    public synchronized void removeByAlias(String alias) {
         aliases.stream().filter(e -> e.getAlias().equals(alias)).findAny().ifPresent(e -> aliases.remove(e));
     }
 
