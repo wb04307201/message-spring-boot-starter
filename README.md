@@ -268,61 +268,32 @@ messageService.removeByAlias
 @Component
 public class H2MessageRecordImpl implements IMessageRecordService {
 
-    private static final String HISTORY = "message_history";
-
-    private static ConnectionPool connectionPool = new ConnectionPool(new ConnectionParam());
+    static {
+        MutilConnectionPool.init("main", "jdbc:h2:file:./data/demo;AUTO_SERVER=TRUE", "sa", "");
+    }
 
     @Override
     public MessageRecord save(MessageRecord messageRecord) {
-        try {
-            Connection conn = connectionPool.getConnection();
-            if (!StringUtils.hasLength(messageRecord.getId())) {
-                messageRecord.setId(UUID.randomUUID().toString());
-                SQL sql = ModelSqlUtils.insertSql(HISTORY, messageRecord);
-                ExecuteSqlUtils.executeUpdate(conn, sql.getParse(), sql.getParams());
-            } else {
-                SQL sql = ModelSqlUtils.updateByIdSql(HISTORY, messageRecord);
-                ExecuteSqlUtils.executeUpdate(conn, sql.getParse(), sql.getParams());
-            }
-            connectionPool.returnConnection(conn);
-        } catch (SQLException | InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-        return messageRecord;
+        MessageRecordHistory messageRecordHistory = MessageRecordHistory.trans(messageRecord);
+        if (!StringUtils.hasLength(messageRecordHistory.getId())) {
+            messageRecordHistory.setId(UUID.randomUUID().toString());
+            MutilConnectionPool.run("main", conn -> ModelSqlUtils.insertSql(messageRecordHistory).executeUpdate(conn));
+        } else
+            MutilConnectionPool.run("main", conn -> ModelSqlUtils.updateSql(messageRecordHistory).executeUpdate(conn));
+        return messageRecordHistory.getMessageRecord();
     }
 
     @Override
     public List<MessageRecord> list(MessageRecord messageRecord) {
-        try {
-            Connection conn = connectionPool.getConnection();
-            SQL sql = ModelSqlUtils.selectSql(HISTORY, new MessageRecord());
-
-            if (StringUtils.hasLength(messageRecord.getType())) sql.addWhereEQ("type", messageRecord.getType());
-            if (StringUtils.hasLength(messageRecord.getAlias())) sql.addWhereLIKE("alias", messageRecord.getType());
-            if (StringUtils.hasLength(messageRecord.getContent())) sql.addWhereLIKE("content", messageRecord.getType());
-            if (StringUtils.hasLength(messageRecord.getResponse()))
-                sql.addWhereLIKE("response", messageRecord.getType());
-
-            sql.parse();
-
-            List<MessageRecord> res = ExecuteSqlUtils.executeQuery(conn, sql.getParse(), sql.getParams(), MessageRecord.class);
-            connectionPool.returnConnection(conn);
-            return res;
-        } catch (SQLException | InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        MessageRecordHistory messageRecordHistory = MessageRecordHistory.trans(messageRecord);
+        return MutilConnectionPool.run("main", conn -> ModelSqlUtils.selectSql(messageRecordHistory).executeQuery(conn)).stream().map(MessageRecordHistory::getMessageRecord).collect(Collectors.toList());
     }
 
     @Override
     public void init() {
-        try {
-            Connection conn = connectionPool.getConnection();
-            if (!ExecuteSqlUtils.isTableExists(conn, HISTORY, DbType.h2)) {
-                ExecuteSqlUtils.executeUpdate(conn, ModelSqlUtils.createSql(HISTORY, new MessageRecord()), new HashMap<>());
-            }
-        } catch (SQLException | InterruptedException e) {
-            throw new RuntimeException(e);
-        }
+        if (Boolean.FALSE.equals(MutilConnectionPool.run("main", conn -> new SQL<MessageRecordHistory>() {
+        }.isTableExists(conn)))) MutilConnectionPool.run("main", conn -> new SQL<MessageRecordHistory>() {
+        }.create().parse().createTable(conn));
     }
 }
 ```
