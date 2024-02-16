@@ -21,10 +21,10 @@ public abstract class AbstractSendService<T extends MessageBase> implements ISen
     public String send(T aliasProperties, Object content) {
         MessageRecord messageRecord = this.beforeSend(aliasProperties, content);
         String res;
-        if (content instanceof MarkdownContent mc) {
-            res = sendMarkdown(aliasProperties, mc);
-        } else if (content instanceof TextContent tc) {
-            res = sendText(aliasProperties, tc);
+        if (content instanceof MarkdownContent) {
+            res = sendMarkdown(aliasProperties, (MarkdownContent)content);
+        } else if (content instanceof TextContent) {
+            res = sendText(aliasProperties, (TextContent)content);
         } else {
             throw new MessageRuntimeException("未知的消息内容类型!");
         }

@@ -21,12 +21,11 @@
 ```
 
 ## 第二步 引入jar
-1.1.0版本后升级到jdk 17 SpringBoot 3.2.0
 ```xml
 <dependency>
     <groupId>com.gitee.wb04307201</groupId>
     <artifactId>message-spring-boot-starter</artifactId>
-    <version>1.1.1</version>
+    <version>1.0.5</version>
 </dependency>
 ```
 

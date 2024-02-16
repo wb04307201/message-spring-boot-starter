@@ -42,30 +42,30 @@ public class ContentUtils {
 
     public static JSONArray toPost(MarkdownContent content) {
         JSONArray ja = new JSONArray();
-        content.getLines().stream().forEach(line -> ja.add(switch (line.getLineType()) {
-            case LINK -> {
-                JSONObject temp = new JSONObject();
-                SubLinkLine subLinkLine = (SubLinkLine) line;
-                temp.put("tag", "a");
-                temp.put("text", subLinkLine.getContent());
-                temp.put("href", subLinkLine.getLink());
-                yield temp;
+        content.getLines().stream().forEach(line -> {
+            JSONObject temp = new JSONObject();
+            switch (line.getLineType()) {
+                case LINK:
+                    SubLinkLine subLinkLine = (SubLinkLine) line;
+                    temp.put("tag", "a");
+                    temp.put("text", subLinkLine.getContent());
+                    temp.put("href", subLinkLine.getLink());
+                    break;
+                case BOLD:
+                    SubBoldLine subBoldLine = (SubBoldLine) line;
+                    temp.put("tag", "text");
+                    temp.put("text", subBoldLine.getContent());
+                    temp.put("style", new JSONArray().add("bold"));
+                    break;
+                case TEXT:
+                case TITLE:
+                case QUOTE:
+                default:
+                    temp.put("tag", "text");
+                    temp.put("text", line.getContent());
             }
-            case BOLD -> {
-                JSONObject temp = new JSONObject();
-                SubBoldLine subBoldLine = (SubBoldLine) line;
-                temp.put("tag", "text");
-                temp.put("text", subBoldLine.getContent());
-                temp.put("style", new JSONArray().add("bold"));
-                yield temp;
-            }
-            case TEXT, TITLE, QUOTE -> {
-                JSONObject temp = new JSONObject();
-                temp.put("tag", "text");
-                temp.put("text", line.getContent());
-                yield temp;
-            }
-        }));
+            ja.add(temp);
+        });
         return ja;
     }
 
