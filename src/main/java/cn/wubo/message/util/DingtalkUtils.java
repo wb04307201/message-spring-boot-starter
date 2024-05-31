@@ -47,4 +47,14 @@ public class DingtalkUtils {
     public static DingTalkClient getMessageClient() {
         return new DefaultDingTalkClient(MESSAGE);
     }
+
+    public static String requestCustomRobot(String accessToken, String secret, String body) throws InvalidKeyException, NoSuchAlgorithmException {
+        Long timestamp = System.currentTimeMillis();
+        String stringToSign = timestamp + "\n" + secret;
+        Mac mac = Mac.getInstance("HmacSHA256");
+        mac.init(new SecretKeySpec(secret.getBytes(StandardCharsets.UTF_8), "HmacSHA256"));
+        byte[] signData = mac.doFinal(stringToSign.getBytes(StandardCharsets.UTF_8));
+        String sign = URLEncoder.encode(new String(Base64.encodeBase64(signData)), StandardCharsets.UTF_8);
+        return RestClientUtils.getRestClient().post().uri(String.format(WEBHOOK, accessToken, timestamp, sign)).body(body).retrieve().toEntity(String.class).getBody();
+    }
 }
