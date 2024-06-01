@@ -1,6 +1,8 @@
 package cn.wubo.message.util;
 
-import com.alibaba.fastjson2.JSONObject;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import org.springframework.util.Assert;
 
 public class WeixinUtils {
 
@@ -13,67 +15,165 @@ public class WeixinUtils {
 
     /**
      * 向自定义机器人发送请求。
+     * 该方法通过POST请求向指定的Webhook地址发送消息体。
      *
-     * @param key  机器人的密钥，用于构建请求的URL。
-     * @param body 请求体的内容，通常为JSON格式，具体格式依赖于机器人的要求。
-     * @return 从机器人服务接收到的响应内容，通常为字符串格式。
+     * @param key  自定义机器人的Key，用于构建Webhook地址。
+     * @param body 要发送的消息体内容。
+     * @return RestClientUtils.post返回的响应结果，通常为字符串形式的响应体。
      */
-    public static String requestCustomRobot(String key, String body) {
-        // @formatter:off
-        // 构建REST客户端请求，设置URI、请求头、请求体，并发送POST请求，然后获取响应体
-        return RestClientUtils.getRestClient()
-                .post()
-                .uri(String.format(WEBHOOK, key)) // 使用密钥格式化 webhook URL
-                .headers(ApiUtils.getJsonContentHeaders()) // 设置请求头，指定内容类型为JSON
-                .body(body) // 设置请求体
-                .retrieve() // 发送请求并获取响应
-                .toEntity(String.class) // 将响应内容解析为字符串类型
-                .getBody(); // 获取响应体内容
-        // @formatter:on
+    public static String customRobot(String key, CustomRobotRequest body) {
+        // 使用Key格式化Webhook地址，并发送POST请求
+        return RestClientUtils.post(String.format(WEBHOOK, key), body);
     }
 
     /**
-     * 获取企业微信访问令牌。
-     * 该令牌用于企业微信API的授权验证。
+     * 获取企业微信的访问令牌。
      *
-     * @param corpid 企业标识，即企业ID，在企业微信管理后台可获取。
-     * @param corpsecret 企业密钥，用于验证企业身份，同样在企业微信管理后台可获取。
-     * @return 返回一个包含访问令牌的JSONObject。其中，访问令牌存储在键为"access_token"的字段中。
+     * @param corpid     企业ID，用于标识企业微信账号。
+     * @param corpsecret 企业微信的密钥，用于验证身份。
+     * @return 返回从企业微信服务器获取的访问令牌。
      */
-    public static JSONObject getToken(String corpid, String corpsecret) {
-        // @formatter:off
-        // 使用RestClientUtils的getRestClient方法获取RestClient实例
-        // 然后构造GET请求，指定获取令牌的URL，并设置请求头为JSON内容类型
-        // 发送请求并检索响应体，将其转换为JSONObject类型并返回
-        return RestClientUtils.getRestClient()
-                .get()
-                .uri(String.format(GET_TOKEN, corpid, corpsecret)) // 使用corpid和corpsecret格式化URL
-                .headers(ApiUtils.getJsonContentHeaders()) // 设置请求头
-                .retrieve() // 发送请求并获取响应
-                .toEntity(JSONObject.class) // 将响应体转换为JSONObject类型
-                .getBody(); // 获取转换后的响应体实体
-        // @formatter:on
+    private static String getToken(String corpid, String corpsecret) {
+        // 尝试从缓存中获取令牌
+        String token = CaffieneCache.getToken("weixin");
+        if (token == null) {
+            // 如果缓存中未找到令牌，则通过网络请求从企业微信服务器获取
+            WeixinToken weixinToken = RestClientUtils.get(String.format(GET_TOKEN, corpid, corpsecret), WeixinToken.class);
+            Assert.isTrue(weixinToken.errcode() != 0, "get weixin token is failed!");
+            // 将获取到的令牌及其过期时间存入缓存
+            token = CaffieneCache.setToken("weixin", weixinToken.expiresIn(), weixinToken.accessToken());
+        }
+        return token;
     }
 
     /**
-     * 使用访问令牌向消息服务发送请求。
+     * 发送企业消息。
      *
-     * @param accessToken 访问资源的令牌，用于验证和授权。
-     * @param body        发送给消息服务的消息体，内容和格式需符合API要求，通常为JSON格式。
-     * @return 服务响应的消息内容，以字符串形式返回。
+     * @param corpid     企业的ID，用于身份验证。
+     * @param corpsecret 企业的应用secret，用于获取访问令牌。
+     * @param body       消息的内容，将被发送给指定的企业。
+     * @return 返回发送消息后接收到的响应内容。
+     * <p>
+     * 此方法内部通过调用getToken获取访问令牌，并将其格式化到消息发送的URL中，
+     * 随后使用RestClientUtils的post方法发送POST请求。
      */
-    public static String message(String accessToken, String body) {
-        // @formatter:off
-        // 创建POST请求，配置URI、请求头、请求体，执行请求并处理响应
-        return RestClientUtils.getRestClient()
-                .post()
-                .uri(String.format(MESSAGE, accessToken)) // 使用访问令牌构造请求URL
-                .headers(ApiUtils.getJsonContentHeaders()) // 设置请求头，适应JSON数据传输
-                .body(body) // 设置请求的具体内容
-                .retrieve() // 发起HTTP POST请求
-                .toEntity(String.class) // 指定响应体应被转换为String类型
-                .getBody(); // 获取实际的响应消息体
-        // @formatter:on
+    public static String message(String corpid, String corpsecret, MessageRobotRequest body) {
+        return RestClientUtils.post(String.format(MESSAGE, getToken(corpid, corpsecret)), body);
     }
 
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    public static class CustomRobotRequest {
+
+        private @JsonProperty("msgtype") String msgType;
+        private @JsonProperty("markdown") Content markdown;
+        private @JsonProperty("text") Content text;
+
+        public CustomRobotRequest(String msgType) {
+            this.msgType = msgType;
+        }
+
+        public static Builder builder(String msgType) {
+            return new Builder(msgType);
+        }
+
+        public static class Builder {
+            CustomRobotRequest options;
+
+            public Builder(String msgType) {
+                this.options = new CustomRobotRequest(msgType);
+            }
+
+            public Builder withMarkdown(String markdown) {
+                Assert.isTrue(!"markdown".equals(this.options.msgType), " msgType value is not markdown, should not use this method!");
+                this.options.markdown = new Content(markdown);
+                return this;
+            }
+
+            public Builder withText(String text) {
+                Assert.isTrue(!"text".equals(this.options.msgType), " msgType value is not text, should not use this method!");
+                this.options.text = new Content(text);
+                return this;
+            }
+
+            public CustomRobotRequest build() {
+                return this.options;
+            }
+        }
+
+        public record Content(String content) {
+        }
+    }
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    public static class MessageRobotRequest {
+        private @JsonProperty("msgtype") String msgType;
+        private @JsonProperty("agentid") String agentId;
+        private @JsonProperty("markdown") Content markdown;
+        private @JsonProperty("text") Content text;
+        private @JsonProperty("touser") String toUser;
+        private @JsonProperty("toparty") String toParty;
+        private @JsonProperty("totag") String toTag;
+
+        public MessageRobotRequest(String msgType, String agentId) {
+            this.msgType = msgType;
+            this.agentId = agentId;
+        }
+
+        public static Builder builder(String msgType, String agentId) {
+            return new Builder(msgType, agentId);
+        }
+
+        public static class Builder {
+            MessageRobotRequest options;
+
+            public Builder(String msgType, String agentId) {
+                this.options = new MessageRobotRequest(msgType, agentId);
+            }
+
+            public Builder withMarkdown(String markdown) {
+                Assert.isTrue(!"markdown".equals(this.options.msgType), " msgType value is not markdown, should not use this method!");
+                this.options.markdown = new Content(markdown);
+                return this;
+            }
+
+            public Builder withText(String text) {
+                Assert.isTrue(!"text".equals(this.options.msgType), " msgType value is not text, should not use this method!");
+                this.options.text = new Content(text);
+                return this;
+            }
+
+            public Builder withToUser(String toUser) {
+                this.options.toUser = toUser;
+                return this;
+            }
+
+            public Builder withToParty(String toParty) {
+                this.options.toParty = toParty;
+                return this;
+            }
+
+            public Builder withToTag(String toTag) {
+                this.options.toTag = toTag;
+                return this;
+            }
+
+            public MessageRobotRequest build() {
+                return this.options;
+            }
+        }
+
+        public record Content(String content) {
+        }
+    }
+
+    public record WeixinToken(
+            // 出错返回码，为0表示成功，非0表示调用失败
+            Integer errcode,
+            // 返回码提示语
+            String errmsg,
+            // 	获取到的凭证，最长为512字节
+            @JsonProperty("access_token") String accessToken,
+            // 	凭证的有效时间（秒）
+            @JsonProperty("expires_in") Long expiresIn) {
+    }
 }
