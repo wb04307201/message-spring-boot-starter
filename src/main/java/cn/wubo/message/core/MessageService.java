@@ -2,8 +2,6 @@ package cn.wubo.message.core;
 
 import cn.wubo.message.message.RequestContent;
 import cn.wubo.message.platform.SendFactory;
-import cn.wubo.message.record.IMessageRecordService;
-import cn.wubo.message.record.MessageRecord;
 import lombok.extern.slf4j.Slf4j;
 
 import java.lang.reflect.InvocationTargetException;
@@ -14,15 +12,14 @@ import java.util.concurrent.CopyOnWriteArrayList;
 @Slf4j
 public class MessageService {
     CopyOnWriteArrayList<MessageBase> aliases;
-    IMessageRecordService messageRecordService;
 
-    public MessageService(List<MessageBase> aliases, IMessageRecordService messageRecordService) {
+    public MessageService(List<MessageBase> aliases) {
         this.aliases = new CopyOnWriteArrayList<>(aliases);
-        this.messageRecordService = messageRecordService;
     }
 
     /**
      * 发送请求内容
+     *
      * @param content 请求内容，包含别名和消息类型等信息
      * @return 发送结果列表，列表中可能包含成功发送的消息或发送失败的错误信息
      */
@@ -41,8 +38,9 @@ public class MessageService {
         }).forEach(item -> {
             try {
                 // 尝试根据发送工厂类发送消息，并将结果添加到结果列表中
-                strings.add(SendFactory.run(item, content, messageRecordService));
-            } catch (NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException e) {
+                strings.add(SendFactory.run(item, content));
+            } catch (NoSuchMethodException | InvocationTargetException | InstantiationException |
+                     IllegalAccessException e) {
                 // 捕获并记录发送过程中的异常，将异常信息添加到结果列表中
                 log.error(e.getMessage(), e);
                 strings.add(e.getMessage());
@@ -67,23 +65,12 @@ public class MessageService {
     /**
      * 根据别名移除对象
      * 从别名集合中查找与给定别名相匹配的对象，如果找到，则从集合中移除该对象。
+     *
      * @param alias 别名 用于查找和移除对象的依据。
      */
     public synchronized void removeByAlias(String alias) {
         // 使用流式操作对别名列表进行过滤，并查找与给定别名相匹配的元素
         aliases.stream().filter(e -> e.getAlias().equals(alias)).findAny().ifPresent(e -> aliases.remove(e));
-    }
-
-    /**
-     * 查询消息记录列表。
-     * 该方法用于根据提供的消息记录对象查询并返回相应的消息记录列表。
-     *
-     * @param messageRecord 消息记录对象，用于查询条件。可以包含消息的发送者、接收者、消息类型等信息，具体取决于实现。
-     * @return 返回一个消息记录列表，列表中的每个元素都符合查询条件。
-     */
-    public List<MessageRecord> list(MessageRecord messageRecord){
-        // 通过消息记录服务查询并返回消息记录列表
-        return messageRecordService.list(messageRecord);
     }
 
 }
