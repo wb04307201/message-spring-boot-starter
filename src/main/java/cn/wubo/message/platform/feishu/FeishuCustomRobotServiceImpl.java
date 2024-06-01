@@ -5,10 +5,8 @@ import cn.wubo.message.exception.FeishuRuntimeException;
 import cn.wubo.message.message.MarkdownContent;
 import cn.wubo.message.message.TextContent;
 import cn.wubo.message.platform.AbstractSendService;
-import cn.wubo.message.record.IMessageRecordService;
 import cn.wubo.message.util.ContentUtils;
 import cn.wubo.message.util.FeishuUtils;
-import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.codec.binary.Base64;
 
 import javax.crypto.Mac;
@@ -20,10 +18,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class FeishuCustomRobotServiceImpl extends AbstractSendService<FeishuProperties.CustomRobot> {
-
-    public FeishuCustomRobotServiceImpl(IMessageRecordService messageRecordService) {
-        super(messageRecordService);
-    }
 
     /**
      * 发送Markdown消息到飞书

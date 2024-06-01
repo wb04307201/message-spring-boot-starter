@@ -5,7 +5,6 @@ import cn.wubo.message.exception.FeishuRuntimeException;
 import cn.wubo.message.message.MarkdownContent;
 import cn.wubo.message.message.TextContent;
 import cn.wubo.message.platform.AbstractSendService;
-import cn.wubo.message.record.IMessageRecordService;
 import cn.wubo.message.util.ContentUtils;
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONArray;
@@ -25,10 +24,6 @@ import java.util.Map;
 public class FeishuMessageServiceImpl extends AbstractSendService<FeishuProperties.Message> {
 
     private static final String RECEIVE_ID_TYPE = "receive_id_type";
-
-    public FeishuMessageServiceImpl(IMessageRecordService messageRecordService) {
-        super(messageRecordService);
-    }
 
     /**
      * 发送Markdown消息到飞书

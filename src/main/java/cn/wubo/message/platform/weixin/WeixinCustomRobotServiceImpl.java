@@ -4,18 +4,11 @@ import cn.wubo.message.core.WeixinPrpperties;
 import cn.wubo.message.message.MarkdownContent;
 import cn.wubo.message.message.TextContent;
 import cn.wubo.message.platform.AbstractSendService;
-import cn.wubo.message.record.IMessageRecordService;
 import cn.wubo.message.util.ContentUtils;
 import cn.wubo.message.util.WeixinUtils;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.Assert;
 
-@Slf4j
 public class WeixinCustomRobotServiceImpl extends AbstractSendService<WeixinPrpperties.CustomRobot> {
-
-    public WeixinCustomRobotServiceImpl(IMessageRecordService messageRecordService) {
-        super(messageRecordService);
-    }
 
     /**
      * 使用markdown格式发送消息到微信自定义机器人。
