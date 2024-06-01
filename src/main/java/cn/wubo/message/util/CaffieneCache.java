@@ -11,6 +11,7 @@ import java.util.concurrent.ConcurrentMap;
 public class CaffieneCache {
 
     private static ConcurrentMap<String, Cache<Object, Object>> caches = new ConcurrentHashMap<>();
+    private static final String TOKEN = "token";
 
     private CaffieneCache() {
     }
@@ -45,8 +46,8 @@ public class CaffieneCache {
         if (caches.containsKey(cacheName)) {
             return null;
         } else {
-            // 尝试从缓存中获取名为"token"的项
-            return (String) caches.get(cacheName).getIfPresent("token");
+            // 尝试从缓存中获取名为TOKEN的项
+            return (String) caches.get(cacheName).getIfPresent(TOKEN);
         }
     }
 
@@ -62,9 +63,9 @@ public class CaffieneCache {
         Assert.notNull(tokenValue, "token value should bot be null!");
         // 通过cacheName获取缓存对象
         Cache<Object, Object> cache = getCache(cacheName, seconds);
-        // 将tokenValue设置到缓存中，键为"token"
-        cache.put("token", tokenValue);
+        // 将tokenValue设置到缓存中，键为TOKEN
+        cache.put(TOKEN, tokenValue);
         // 返回缓存中当前的token值
-        return (String) cache.getIfPresent("token");
+        return (String) cache.getIfPresent(TOKEN);
     }
 }
