@@ -12,6 +12,9 @@ public class CaffieneCache {
 
     private static ConcurrentMap<String, Cache<Object, Object>> caches = new ConcurrentHashMap<>();
 
+    private CaffieneCache() {
+    }
+
     /**
      * 获取指定名称的缓存对象。如果该缓存不存在，则根据提供的秒数创建一个新的缓存对象。
      *
