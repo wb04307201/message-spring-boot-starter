@@ -34,10 +34,9 @@ public class DingtalkUtils {
      * @param secret 钉钉自定义机器人的密钥，用于生成签名。
      * @return 返回一个配置了访问令牌和签名的DingTalkClient实例。
      * @throws NoSuchAlgorithmException 如果HmacSHA256算法不可用，则抛出此异常。
-     * @throws UnsupportedEncodingException 如果UTF-8编码不受支持，则抛出此异常。
      * @throws InvalidKeyException 如果密钥无效，则抛出此异常。
      */
-    public static DingTalkClient getCustomRobotClient(String accessToken, String secret) throws NoSuchAlgorithmException, UnsupportedEncodingException, InvalidKeyException {
+    public static DingTalkClient getCustomRobotClient(String accessToken, String secret) throws NoSuchAlgorithmException, InvalidKeyException {
         // 获取当前时间戳，用于签名的时效性验证
         Long timestamp = System.currentTimeMillis();
         // 构建待签名字符串，包括时间戳和密钥
