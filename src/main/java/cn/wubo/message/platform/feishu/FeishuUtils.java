@@ -1,15 +1,10 @@
-package cn.wubo.message.util;
+package cn.wubo.message.platform.feishu;
 
+import cn.wubo.message.util.RestClientUtils;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import org.apache.commons.codec.binary.Base64;
 import org.springframework.util.Assert;
 
-import javax.crypto.Mac;
-import javax.crypto.spec.SecretKeySpec;
-import java.nio.charset.StandardCharsets;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 public class FeishuUtils {

@@ -1,4 +1,4 @@
-package cn.wubo.message.util;
+package cn.wubo.message.platform.dingtalk;
 
 import com.dingtalk.api.DefaultDingTalkClient;
 import com.dingtalk.api.DingTalkClient;

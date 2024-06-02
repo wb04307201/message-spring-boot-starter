@@ -1,5 +1,7 @@
-package cn.wubo.message.util;
+package cn.wubo.message.platform.weixin;
 
+import cn.wubo.message.util.CaffieneCache;
+import cn.wubo.message.util.RestClientUtils;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.util.Assert;

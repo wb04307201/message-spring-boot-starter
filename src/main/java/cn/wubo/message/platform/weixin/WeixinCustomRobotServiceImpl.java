@@ -5,7 +5,6 @@ import cn.wubo.message.message.MarkdownContent;
 import cn.wubo.message.message.TextContent;
 import cn.wubo.message.platform.AbstractSendService;
 import cn.wubo.message.util.ContentUtils;
-import cn.wubo.message.util.WeixinUtils;
 import org.springframework.util.Assert;
 
 public class WeixinCustomRobotServiceImpl extends AbstractSendService<WeixinPrpperties.CustomRobot> {

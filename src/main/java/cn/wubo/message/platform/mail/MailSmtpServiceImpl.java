@@ -6,7 +6,6 @@ import cn.wubo.message.message.MarkdownContent;
 import cn.wubo.message.message.TextContent;
 import cn.wubo.message.platform.AbstractSendService;
 import cn.wubo.message.util.ContentUtils;
-import cn.wubo.message.util.MailUtils;
 import jakarta.mail.MessagingException;
 import org.springframework.util.Assert;
 

@@ -6,7 +6,6 @@ import cn.wubo.message.message.MarkdownContent;
 import cn.wubo.message.message.TextContent;
 import cn.wubo.message.platform.AbstractSendService;
 import cn.wubo.message.util.ContentUtils;
-import cn.wubo.message.util.FeishuUtils;
 import org.apache.commons.codec.binary.Base64;
 
 import javax.crypto.Mac;

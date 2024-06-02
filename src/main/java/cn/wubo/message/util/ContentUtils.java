@@ -1,6 +1,7 @@
 package cn.wubo.message.util;
 
 import cn.wubo.message.message.*;
+import cn.wubo.message.platform.feishu.FeishuUtils;
 import org.commonmark.parser.Parser;
 import org.commonmark.renderer.html.HtmlRenderer;
 

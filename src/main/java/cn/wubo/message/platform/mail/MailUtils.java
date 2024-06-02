@@ -1,4 +1,4 @@
-package cn.wubo.message.util;
+package cn.wubo.message.platform.mail;
 
 import jakarta.mail.Message;
 import jakarta.mail.MessagingException;
