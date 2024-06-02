@@ -37,13 +37,13 @@ public class WeixinUtils {
      */
     private static String getToken(String corpid, String corpsecret) {
         // 尝试从缓存中获取令牌
-        String token = CaffieneCache.getToken("weixin");
+        String token = CaffieneCache.getToken("weixin-" + corpid);
         if (token == null) {
             // 如果缓存中未找到令牌，则通过网络请求从企业微信服务器获取
             WeixinToken weixinToken = RestClientUtils.get(String.format(GET_TOKEN, corpid, corpsecret), WeixinToken.class);
             Assert.isTrue(weixinToken.errcode() != 0, "get weixin token is failed!");
             // 将获取到的令牌及其过期时间存入缓存
-            token = CaffieneCache.setToken("weixin", weixinToken.expiresIn(), weixinToken.accessToken());
+            token = CaffieneCache.setToken("weixin-" + corpid, weixinToken.expiresIn(), weixinToken.accessToken());
         }
         return token;
     }
