@@ -1,4 +1,4 @@
-package cn.wubo.message.util;
+package cn.wubo.message.platform.dingtalk;
 
 import com.dingtalk.api.DefaultDingTalkClient;
 import com.dingtalk.api.DingTalkClient;
@@ -23,7 +23,6 @@ public class DingtalkUtils {
     private static final String WEBHOOK = "https://oapi.dingtalk.com/robot/send?access_token=%s&timestamp=%s&sign=%s";
     private static final String GET_TOKEN = "https://oapi.dingtalk.com/gettoken";
     private static final String MESSAGE = "https://oapi.dingtalk.com/topapi/message/corpconversation/asyncsend_v2?access_token=%s";
-
 
     public static DingTalkClient getCustomRobotClient(String accessToken, String secret) throws NoSuchAlgorithmException, UnsupportedEncodingException, InvalidKeyException {
         Long timestamp = System.currentTimeMillis();

@@ -10,12 +10,8 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Data
 @ConfigurationProperties(prefix = "message")
 public class MessageConfigurationProperties {
-
-    private String messageRecord = "cn.wubo.message.record.impl.MemMessageRecordServiceImpl";
-
     private DingtalkProperties dingtalk = new DingtalkProperties();
     private FeishuProperties feishu = new FeishuProperties();
     private WeixinPrpperties weixin = new WeixinPrpperties();
     private MailProperties mail = new MailProperties();
-
 }

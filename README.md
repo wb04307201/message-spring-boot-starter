@@ -21,12 +21,12 @@
 ```
 
 ## 第二步 引入jar
-1.1.0版本后升级到jdk 17 SpringBoot 3.2.0
+1.1.0版本后升级到jdk 17 SpringBoot 3.2+
 ```xml
 <dependency>
     <groupId>com.gitee.wb04307201</groupId>
     <artifactId>message-spring-boot-starter</artifactId>
-    <version>1.1.1</version>
+    <version>1.1.3</version>
 </dependency>
 ```
 
@@ -230,7 +230,7 @@ public class DemoController {
 | receive_id      | String | 消息接收者的ID，ID类型应与查询参数receive_id_type 对应            |
 
 ###### 5. 企业微信自定义机器人
-暂无参数
+暂无支持的额外参数
 
 ###### 6. 企业微信消息
 | 参数      | 参数类型   | 说明                                                                     |
@@ -244,13 +244,7 @@ public class DemoController {
 |----|--------|-------------|
 | to | String | 收件邮箱1,收件邮箱2 |
 
-## 其他1：内置界面
-
-发送的消息可通过http://ip:端口/message/list进行查看  
-注意：如配置了context-path需要在地址中对应添加  
-![img.png](img.png)
-
-## 其他2：动态增减平台信息
+## 其他1：动态增减平台信息
 
 ```java
 //可以通过如下方法添加平台信息
@@ -259,54 +253,3 @@ messageService.add
 //可以通过如下方法删除平台信息
 messageService.removeByAlias
 ```
-
-## 其他3：实际使用中，可通过配置和实现日志接口方法将数据持久化到数据库中
-
-继承IMessageRecordService并实现方法，例如
-
-```java
-@Component
-public class H2MessageRecordImpl implements IMessageRecordService {
-
-    static {
-        MutilConnectionPool.init("main", "jdbc:h2:file:./data/demo;AUTO_SERVER=TRUE", "sa", "");
-    }
-
-    @Override
-    public MessageRecord save(MessageRecord messageRecord) {
-        MessageRecordHistory messageRecordHistory = MessageRecordHistory.trans(messageRecord);
-        if (!StringUtils.hasLength(messageRecordHistory.getId())) {
-            messageRecordHistory.setId(UUID.randomUUID().toString());
-            MutilConnectionPool.run("main", conn -> ModelSqlUtils.insertSql(messageRecordHistory).executeUpdate(conn));
-        } else
-            MutilConnectionPool.run("main", conn -> ModelSqlUtils.updateSql(messageRecordHistory).executeUpdate(conn));
-        return messageRecordHistory.getMessageRecord();
-    }
-
-    @Override
-    public List<MessageRecord> list(MessageRecord messageRecord) {
-        MessageRecordHistory messageRecordHistory = MessageRecordHistory.trans(messageRecord);
-        return MutilConnectionPool.run("main", conn -> ModelSqlUtils.selectSql(messageRecordHistory).executeQuery(conn)).stream().map(MessageRecordHistory::getMessageRecord).collect(Collectors.toList());
-    }
-
-    @Override
-    public void init() {
-        if (Boolean.FALSE.equals(MutilConnectionPool.run("main", conn -> new SQL<MessageRecordHistory>() {
-        }.isTableExists(conn)))) MutilConnectionPool.run("main", conn -> new SQL<MessageRecordHistory>() {
-        }.create().parse().createTable(conn));
-    }
-}
-```
-
-并添加配置指向类
-
-```yaml
-message:
-  messageRecord: cn.wubo.message.H2MessageRecordImpl
-```
-
-## 待办
-
-- [ ] *钉钉token增加缓存*
-
-- [ ] *添加短信平台*

@@ -7,8 +7,8 @@ import cn.wubo.message.platform.dingtalk.DingtalkMessageServiceImpl;
 import cn.wubo.message.platform.feishu.FeishuCustomRobotServiceImpl;
 import cn.wubo.message.platform.feishu.FeishuMessageServiceImpl;
 import cn.wubo.message.platform.mail.MailSmtpServiceImpl;
-import cn.wubo.message.platform.wx.WeixinCustomRobotServiceImpl;
-import cn.wubo.message.platform.wx.WeixinMessageServiceImpl;
+import cn.wubo.message.platform.weixin.WeixinCustomRobotServiceImpl;
+import cn.wubo.message.platform.weixin.WeixinMessageServiceImpl;
 import lombok.Getter;
 
 import java.util.Arrays;
