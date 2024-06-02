@@ -10,7 +10,6 @@ import com.alibaba.fastjson2.JSON;
 import com.dingtalk.api.request.OapiRobotSendRequest;
 import com.taobao.api.ApiException;
 
-import java.io.UnsupportedEncodingException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
@@ -50,10 +49,31 @@ public class DingtalkCustomRobotServiceImpl extends AbstractSendService<Dingtalk
         return request;
     }
 
+    /**
+     * 执行钉钉自定义机器人发送消息的操作。
+     * 该方法封装了向钉钉自定义机器人发送消息的过程，通过提供的access token和secret验证身份，并发送请求。
+     * 如果在执行过程中出现异常，将会抛出DingtalkRuntimeException。
+     *
+     * @param aliasProperties 钉钉自定义机器人配置属性，包含access token和secret。
+     * @param request 发送给钉钉自定义机器人的消息请求对象。
+     * @return 返回钉钉服务器响应的JSON字符串。
+     * @throws DingtalkRuntimeException 如果执行过程中出现异常，将会抛出此运行时异常。
+     */
     private String execute(DingtalkProperties.CustomRobot aliasProperties, OapiRobotSendRequest request) {
         try {
-            return JSON.toJSONString(DingtalkUtils.getCustomRobotClient(Objects.requireNonNull(aliasProperties.getAccessToken()), Objects.requireNonNull(aliasProperties.getSecret())).execute(request));
-        } catch (ApiException | NoSuchAlgorithmException | UnsupportedEncodingException | InvalidKeyException e) {
+            // @formatter:off
+            // 使用JSON.toJSONString序列化钉钉客户端执行结果为JSON字符串
+            return JSON.toJSONString(
+                    DingtalkUtils
+                            .getCustomRobotClient(
+                                    Objects.requireNonNull(aliasProperties.getAccessToken()),
+                                    Objects.requireNonNull(aliasProperties.getSecret())
+                            )
+                            .execute(request)
+            );
+            // @formatter:on
+        } catch (ApiException | NoSuchAlgorithmException | InvalidKeyException e) {
+            // 捕获异常并抛出自定义的运行时异常，以便上层调用者能够更方便地处理异常情况
             throw new DingtalkRuntimeException(e.getMessage(), e);
         }
     }
