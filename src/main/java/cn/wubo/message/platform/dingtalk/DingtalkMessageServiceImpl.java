@@ -8,7 +8,6 @@ import cn.wubo.message.platform.AbstractSendService;
 import cn.wubo.message.util.ContentUtils;
 import com.alibaba.fastjson2.JSON;
 import com.dingtalk.api.request.OapiMessageCorpconversationAsyncsendV2Request;
-import com.dingtalk.api.response.OapiGettokenResponse;
 
 import java.util.Map;
 import java.util.Objects;
@@ -49,11 +48,36 @@ public class DingtalkMessageServiceImpl extends AbstractSendService<DingtalkProp
         return request;
     }
 
+    /**
+     * 执行钉钉消息发送。
+     * 该方法封装了向钉钉发送消息的逻辑，通过调用钉钉开放平台的API，将请求参数转换为JSON字符串返回。
+     * 如果在执行过程中遇到异常，将抛出自定义的DingtalkRuntimeException异常。
+     *
+     * @param aliasProperties 钉钉配置属性，包含应用的appkey和appsecret，用于身份验证。
+     * @param request         发送消息的请求对象，包含了消息的接收者、内容等信息。
+     * @return 返回处理结果的JSON字符串。
+     * @throws DingtalkRuntimeException 如果执行过程中发生异常，将抛出此运行时异常。
+     */
     private String execute(DingtalkProperties.Message aliasProperties, OapiMessageCorpconversationAsyncsendV2Request request) {
         try {
-            OapiGettokenResponse oapiGettokenResponse = DingtalkUtils.getToken(Objects.requireNonNull(aliasProperties.getAppkey()), Objects.requireNonNull(aliasProperties.getAppsecret()));
-            return JSON.toJSONString(DingtalkUtils.getMessageClient().execute(request, oapiGettokenResponse.getAccessToken()));
+            // @formatter:off
+            // 调用DingtalkUtils的getMessageClient方法获取消息客户端实例
+            // 然后使用该实例执行请求，并传入通过钉钉应用的appkey和appsecret获取的访问令牌
+            // 最后将执行结果使用JSON.toJSONString方法转换为JSON字符串返回
+            return JSON.toJSONString(
+                    DingtalkUtils.getMessageClient()
+                            .execute(
+                                    request,
+                                    DingtalkUtils.getToken(
+                                            Objects.requireNonNull(aliasProperties.getAppkey()),
+                                            Objects.requireNonNull(aliasProperties.getAppsecret())
+                                    )
+                            )
+            );
+            // @formatter:on
         } catch (Exception e) {
+            // 当执行过程中发生异常时，抛出自定义的运行时异常DingtalkRuntimeException
+            // 异常信息包含原始异常的消息和原始异常本身
             throw new DingtalkRuntimeException(e.getMessage(), e);
         }
     }
