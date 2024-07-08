@@ -4,7 +4,8 @@
 [![star](https://gitee.com/wb04307201/message-spring-boot-starter/badge/star.svg?theme=dark)](https://gitee.com/wb04307201/message-spring-boot-starter)
 [![fork](https://gitee.com/wb04307201/message-spring-boot-starter/badge/fork.svg?theme=dark)](https://gitee.com/wb04307201/message-spring-boot-starter)
 [![star](https://img.shields.io/github/stars/wb04307201/message-spring-boot-starter)](https://github.com/wb04307201/message-spring-boot-starter)
-[![fork](https://img.shields.io/github/forks/wb04307201/message-spring-boot-starter)](https://github.com/wb04307201/message-spring-boot-starter)
+[![fork](https://img.shields.io/github/forks/wb04307201/message-spring-boot-starter)](https://github.com/wb04307201/message-spring-boot-starter)  
+![MIT](https://img.shields.io/badge/License-Apache2.0-blue.svg) ![JDK](https://img.shields.io/badge/JDK-17+-green.svg) ![SpringBoot](https://img.shields.io/badge/Srping%20Boot-3+-green.svg)
 
 > 这是一个消息中间件  
 > 通过配置和编码，即可将相同的消息通过钉钉自定义机器人、钉钉消息、飞书自定义机器人、飞书消息、企业微信自定义机器人、企业微信消息以及邮箱消息通道进行发送  
